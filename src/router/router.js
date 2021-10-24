@@ -39,6 +39,13 @@ const routes = [
       else next('/');
     },
   },
+  {
+    path: '*',
+    beforeEnter: (to, from, next) => {
+      if (store.state.expired == false) next('/Menu');
+      else next('/');
+    },
+  },
 ];
 
 const router = new VueRouter({
