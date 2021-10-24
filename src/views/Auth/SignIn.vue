@@ -1,0 +1,85 @@
+<!-- @format -->
+<template>
+  <b-container>
+    <b-row class="justify-content-md-center mt-4">
+      <b-col col md="4">
+        <b-card header="INICIO DE SESIÓN" header-bg-variant="primary" header-text-variant="white">
+          <b-card-text>
+            <b-form @submit="onSubmit">
+              <b-form-group description="Enter your email." label="Email">
+                <b-form-input v-model="username" required type="email"> </b-form-input>
+              </b-form-group>
+
+              <b-form-group description="Enter your password." label="Password">
+                <b-form-input v-model="password" required type="password"> </b-form-input>
+              </b-form-group>
+              <hr />
+
+              <b-form-group>
+                <b-button type="submit" variant="outline-primary">
+                  <span v-if="loading">
+                    <b-spinner small type="grow"></b-spinner>
+                  </span>
+
+                  <span class="sr-only">
+                    {{ btnname }}
+                  </span>
+                </b-button>
+              </b-form-group>
+              <br />
+
+              <b-form-group>
+                <b-alert :variant="viewcolor" :show="viewalert" @dismissed="viewalert = false">
+                  {{ message }}
+                </b-alert>
+              </b-form-group>
+            </b-form>
+          </b-card-text>
+        </b-card>
+      </b-col>
+    </b-row>
+  </b-container>
+</template>
+
+<script>
+import {isJwtExpired} from 'jwt-check-expiration';
+
+export default {
+  data() {
+    return {
+      username: '',
+      password: '',
+
+      loading: false,
+      btnname: 'Entrar',
+
+      viewalert: false,
+      viewcolor: 'danger',
+      message: '',
+    };
+  },
+  methods: {
+    async onSubmit(event) {
+      event.preventDefault();
+      this.btnname = 'Iniciando...';
+      this.loading = true;
+
+      try {
+        const res = await this.axios.post('/auth/singin', {
+          username: this.username,
+          password: this.password,
+        });
+
+        localStorage.setItem('token', res.data.body.token);
+        this.$store.commit('setToken', res.data.body.token);
+        this.$store.commit('setExpired', isJwtExpired(res.data.body.token));
+
+        this.$router.replace({name: 'Menu'});
+      } catch (error) {
+        this.viewalert = true;
+        this.message = error.response.data.message;
+      }
+    },
+  },
+};
+</script>
