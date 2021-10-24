@@ -12,8 +12,11 @@ export default new Vuex.Store({
     email: '',
     token: null,
     expired: true,
+
     products: [],
     product: {},
+
+    types: [],
   },
   mutations: {
     setToken(state, status) {
@@ -32,6 +35,10 @@ export default new Vuex.Store({
     SET_PRODUCT(state, status) {
       state.products.push(status);
     },
+
+    SET_TYPES(state, status) {
+      state.types = status;
+    },
   },
   actions: {
     async getType({commit}, {id}) {
@@ -43,10 +50,23 @@ export default new Vuex.Store({
       }
     },
 
+    async getTypes({commit}) {
+      try {
+        const response = await axios.get('/typeroom/');
+        const array = response.data;
+
+        commit('SET_TYPES', array);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
     async getProducts({commit}) {
       try {
         const response = await axios.get('/room/');
-        commit('SET_PRODUCTS', response.data);
+        const array = response.data;
+
+        commit('SET_PRODUCTS', array);
       } catch (error) {
         console.error(error);
       }
@@ -55,14 +75,13 @@ export default new Vuex.Store({
     async addProduct({commit}, {product}) {
       try {
         const res = await axios.post('/room/save', {
+          idroom: product.id,
           name: product.name,
           description: product.description,
           price: product.price,
-          //ingresa este id tipo por defecto...por ahora.
-          idtype: '61737d1c6055b508dc83975f',
+          idtype: product.type,
         });
 
-        commit('SET_PRODUCT', res.data.body);
         return res.data.message;
       } catch (error) {
         return error.response.data.message;

@@ -10,10 +10,13 @@
           header-text-variant="white"
         >
           <b-card-text>
+            <!-- FORMULARIO DE REGISTRO DE HABITACIONES -->
             <b-form @submit="onSubmit">
+              <!-- -->
               <b-form-group class="mb-3" description="Ingrese nombre de habitación." label="Nombre">
                 <b-form-input v-model="product.name" required type="text"> </b-form-input>
               </b-form-group>
+              <!-- -->
               <b-form-group
                 class="mb-3"
                 description="Ingrese descripción de habitación."
@@ -21,11 +24,30 @@
               >
                 <b-form-input v-model="product.description" required type="text"> </b-form-input>
               </b-form-group>
+              <!-- -->
               <b-form-group class="mb-3" description="Ingrese precio de habitación." label="Precio">
                 <b-form-input v-model="product.price" required type="number"> </b-form-input>
               </b-form-group>
+              <!-- -->
+              <b-form-group class="mb-3" label="Tipo">
+                <b-form-select
+                  v-model="product.type"
+                  :options="$store.state.types"
+                  value-field="idtyperoom"
+                  text-field="name"
+                  disabled-field="!state"
+                  required
+                >
+                  <template #first>
+                    <b-form-select-option value="" disabled>
+                      -- Please select an option --
+                    </b-form-select-option>
+                  </template>
+                </b-form-select>
+              </b-form-group>
+              {{ product.type }}
               <hr />
-
+              <!-- -->
               <b-form-group>
                 <b-button type="submit" class="mx-2" variant="outline-primary">
                   <span v-if="loading">
@@ -37,9 +59,9 @@
                   <b-icon icon="arrow90deg-left" aria-hidden="true"></b-icon>
                 </b-button>
               </b-form-group>
-
+              <!-- -->
               <br />
-
+              <!-- -->
               <b-form-group>
                 <b-alert variant="warning" :show="viewalert" @dismissed="viewalert = false">
                   {{ message }}
@@ -50,6 +72,7 @@
         </b-card>
       </b-col>
       <b-col col md="8">
+        <!-- TABLA DE HABITACIONES -->
         <b-table
           responsive
           hover
@@ -65,6 +88,7 @@
             </div>
           </template>
           <template #cell(idtype)="data">
+            {{ data.value }}
             <TypeRoomSpan :id="data.value" />
           </template>
           <template #cell(state)="data">
@@ -131,6 +155,7 @@ export default {
         name: '',
         description: '',
         price: 50,
+        type: 'f',
       },
 
       loading: false,
@@ -141,10 +166,22 @@ export default {
   },
 
   async created() {
-    //Jpicoyrosas@gmail.com
-    this.$store.dispatch('getProducts');
+    this.getRooms();
+    this.getTypesRoom();
   },
   methods: {
+    getRooms() {
+      this.$store.dispatch('getProducts');
+    },
+    getTypesRoom() {
+      this.$store.dispatch('getTypes');
+    },
+    clear() {
+      this.product.id = '';
+      this.product.name = '';
+      this.product.description = '';
+      this.product.price = 50;
+    },
     async onSubmit(event) {
       event.preventDefault();
       this.loading = true;
@@ -159,19 +196,15 @@ export default {
 
       this.viewalert = true;
       this.message = mssg;
-      clear();
+
+      this.clear();
+      this.getRooms();
     },
     async update(item) {
       this.product.id = item.idroomm;
       this.product.name = item.name;
       this.product.description = item.description;
       this.product.price = item.price;
-    },
-    clear() {
-      this.product.id = '';
-      this.product.name = '';
-      this.product.description = '';
-      this.product.price = 50;
     },
   },
 };
