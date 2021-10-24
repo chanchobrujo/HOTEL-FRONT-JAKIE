@@ -49,7 +49,6 @@ export default new Vuex.Store({
         console.error(error);
       }
     },
-
     async getTypes({commit}) {
       try {
         const response = await axios.get('/typeroom/');
@@ -71,7 +70,6 @@ export default new Vuex.Store({
         console.error(error);
       }
     },
-
     async addProduct({commit}, {product}) {
       try {
         const res = await axios.post('/room/save', {
@@ -82,6 +80,22 @@ export default new Vuex.Store({
           idtype: product.type,
         });
 
+        return res.data.message;
+      } catch (error) {
+        return error.response.data.message;
+      }
+    },
+    async deleteProduct({commit}, {id}) {
+      try {
+        const res = await axios.delete('/room/deleteById' + id);
+        return res.data.message;
+      } catch (error) {
+        return error.response.data.message;
+      }
+    },
+    async changeState({commit}, {id}) {
+      try {
+        const res = await axios.put('/room/changeState' + id);
         return res.data.message;
       } catch (error) {
         return error.response.data.message;
