@@ -45,7 +45,6 @@
                   </template>
                 </b-form-select>
               </b-form-group>
-              {{ product.type }}
               <hr />
               <!-- -->
               <b-form-group>
@@ -87,10 +86,12 @@
               <b-spinner class="align-middle"></b-spinner>
             </div>
           </template>
+
+          <!-- Celda del id del tipo de habitación -->
           <template #cell(idtype)="data">
-            {{ data.value }}
             <TypeRoomSpan :id="data.value" />
           </template>
+
           <template #cell(state)="data">
             <b-icon
               v-if="data.value"
@@ -132,7 +133,6 @@
               <b-icon icon="arrow-down" aria-hidden="true"></b-icon>
             </b-button>
           </template>
-
           <template #table-caption>Habitaciones.</template>
         </b-table>
       </b-col>
@@ -155,7 +155,7 @@ export default {
         name: '',
         description: '',
         price: 50,
-        type: 'f',
+        type: '',
       },
 
       loading: false,
@@ -165,7 +165,7 @@ export default {
     };
   },
 
-  async created() {
+  created() {
     this.getRooms();
     this.getTypesRoom();
   },
@@ -205,6 +205,7 @@ export default {
       this.product.name = item.name;
       this.product.description = item.description;
       this.product.price = item.price;
+      this.product.type = item.idtype;
     },
   },
 };

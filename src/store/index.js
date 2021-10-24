@@ -44,7 +44,7 @@ export default new Vuex.Store({
     async getType({commit}, {id}) {
       try {
         const response = await axios.get('/typeroom/' + id);
-        return response.data.name;
+        return response.data;
       } catch (error) {
         console.error(error);
       }

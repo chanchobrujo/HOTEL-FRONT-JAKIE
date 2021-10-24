@@ -1,6 +1,11 @@
 <!-- @format -->
 <template>
-  <b-button size="sm" pill disabled variant="outline-primary">{{ name }}</b-button>
+  <div>
+    <span v-show="false">
+      {{ getname(id) }}
+    </span>
+    <b-button size="sm" pill variant="outline-primary">{{ name }}</b-button>
+  </div>
 </template>
 
 <script>
@@ -13,11 +18,14 @@ export default {
   props: {
     id: String,
   },
-  async created() {
-    this.name = await this.$store.dispatch('getType', {
-      id: this.id,
-    });
+  mounted() {},
+  methods: {
+    async getname(id) {
+      const type = await this.$store.dispatch('getType', {
+        id: id,
+      });
+      this.name = type.name;
+    },
   },
-  methods: {},
 };
 </script>
