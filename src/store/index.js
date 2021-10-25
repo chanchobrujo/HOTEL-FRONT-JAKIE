@@ -87,7 +87,7 @@ export default new Vuex.Store({
     },
     async deleteProduct({commit}, {id}) {
       try {
-        const res = await axios.delete('/room/deleteById' + id);
+        const res = await axios.delete('/room/deleteById/' + id);
         return res.data.message;
       } catch (error) {
         return error.response.data.message;
@@ -95,7 +95,7 @@ export default new Vuex.Store({
     },
     async changeState({commit}, {id}) {
       try {
-        const res = await axios.put('/room/changeState' + id);
+        const res = await axios.put('/room/changeState/' + id);
         return res.data.message;
       } catch (error) {
         return error.response.data.message;

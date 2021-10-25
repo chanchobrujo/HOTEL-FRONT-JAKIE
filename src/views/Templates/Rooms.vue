@@ -110,7 +110,7 @@
               variant="outline-danger"
               size="sm"
               class="m-1"
-              @click="update(row.item.idroomm)"
+              @click="deleteProduct(row.item.idroomm)"
             >
               <b-icon icon="trash" aria-hidden="true"></b-icon>
             </b-button>
@@ -119,18 +119,22 @@
               variant="outline-dark"
               size="sm"
               class="m-1"
-              @click="update(row.item.idroomm)"
+              v-b-tooltip.hover
+              title="Dar de baja"
+              @click="changeState(row.item.idroomm)"
             >
-              <b-icon icon="arrow-up" aria-hidden="true"></b-icon>
+              <b-icon icon="arrow-down" aria-hidden="true"></b-icon>
             </b-button>
             <b-button
               v-else
               variant="outline-success"
               size="sm"
               class="m-1"
-              @click="update(row.item.idroomm)"
+              v-b-tooltip.hover
+              title="Dar de alta"
+              @click="changeState(row.item.idroomm)"
             >
-              <b-icon icon="arrow-down" aria-hidden="true"></b-icon>
+              <b-icon icon="arrow-up" aria-hidden="true"></b-icon>
             </b-button>
           </template>
           <template #table-caption>Habitaciones.</template>
@@ -149,7 +153,7 @@ export default {
   data() {
     return {
       fields: ['name', 'description', 'idtype', 'price', 'state', 'actions'],
-      isBusy: false,
+      isBusy: true,
       product: {
         id: '',
         name: '',
@@ -171,6 +175,9 @@ export default {
   },
   methods: {
     getRooms() {
+      setTimeout(() => {
+        this.isBusy = false;
+      }, 2000);
       this.$store.dispatch('getProducts');
     },
     getTypesRoom() {
@@ -182,6 +189,20 @@ export default {
       this.product.description = '';
       this.product.price = 50;
     },
+    async deleteProduct(id) {
+      this.isBusy = true;
+      this.message = await this.$store.dispatch('deleteProduct', {
+        id: id,
+      });
+      this.getRooms();
+    },
+    async changeState(id) {
+      this.isBusy = true;
+      this.message = await this.$store.dispatch('changeState', {
+        id: id,
+      });
+      this.getRooms();
+    },
     async onSubmit(event) {
       event.preventDefault();
       this.loading = true;
@@ -192,7 +213,6 @@ export default {
       });
 
       this.loading = false;
-      this.isBusy = false;
 
       this.viewalert = true;
       this.message = mssg;
