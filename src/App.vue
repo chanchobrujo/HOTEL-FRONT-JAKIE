@@ -4,7 +4,9 @@
   <div id="app">
     <Nav :show="!$store.state.expired" />
     <SideBar />
-    <router-view />
+    <transition name="slide">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 

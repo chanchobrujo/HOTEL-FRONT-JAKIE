@@ -3,14 +3,14 @@
 <template>
   <div>
     <b-sidebar id="sidebar-footer" title="Menú de navegación" backdrop shadow>
-      <template #default="{ hide }">
+      <template>
         <div class="p-3">
           <nav class="mb-3">
             <Profile />
             <b-nav vertical>
-              <b-nav-item active @click="hide">Active</b-nav-item>
-              <b-nav-item href="#link-1" @click="hide">Link</b-nav-item>
-              <b-nav-item href="#link-2" @click="hide">Another Link</b-nav-item>
+              <router-link to="/Rooms" style="text-decoration: none; ">
+                Mantenimiento de habitaciones
+              </router-link>
             </b-nav>
           </nav>
           <b-button variant="primary" @click="closeSession" class="btn btn-primary btn-block">

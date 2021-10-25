@@ -12,7 +12,9 @@
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item>Sistema administrativo</b-nav-item>
+          <router-link to="/Menu" style="text-decoration: none;color: white">
+            Sistema administrativo
+          </router-link>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
