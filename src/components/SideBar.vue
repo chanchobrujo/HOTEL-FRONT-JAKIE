@@ -14,7 +14,13 @@
             </b-nav>
           </nav>
           <b-button variant="primary" @click="closeSession" class="btn btn-primary btn-block">
-            Close Sidebar
+            <span v-if="loading">
+              <b-spinner small type="grow"></b-spinner>
+            </span>
+
+            <span class="sr-only">
+              {{ btnname }}
+            </span>
           </b-button>
         </div>
       </template>
@@ -26,16 +32,25 @@
 import Profile from './Profile.vue';
 export default {
   data() {
-    return {};
+    return {
+      loading: false,
+      btnname: 'Cerrar sesión',
+    };
   },
   props: {
     show: Boolean,
   },
   methods: {
     async closeSession() {
-      localStorage.clear();
-      this.$store.commit('setExpired', true);
-      this.$router.replace({name: 'SignIn'});
+      this.btnname = 'Cerrando';
+      this.loading = true;
+
+      setTimeout(() => {
+        localStorage.clear();
+        this.$store.commit('setExpired', true);
+        this.$router.replace({name: 'SignIn'});
+        this.loading = false;
+      }, 2000);
     },
   },
   components: {

@@ -78,6 +78,8 @@ export default {
       } catch (error) {
         this.viewalert = true;
         this.message = error.response.data.message;
+      } finally {
+        this.loading = false;
       }
     },
   },
