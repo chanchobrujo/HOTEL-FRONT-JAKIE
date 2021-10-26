@@ -4,6 +4,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 
 import SignIn from '../views/Auth/SignIn.vue';
+import SignUp from '../views/Auth/SignUp.vue';
 import Menu from '../views/Templates/Menu.vue';
 import Rooms from '../views/Templates/Rooms.vue';
 
@@ -12,6 +13,15 @@ import store from '../store/index.js';
 Vue.use(VueRouter);
 
 const routes = [
+  {
+    path: '/SignUp',
+    name: 'SignUp',
+    component: SignUp,
+    beforeEnter: (to, from, next) => {
+      if (store.state.expired == true) next();
+      else next('/Menu');
+    },
+  },
   {
     path: '/',
     name: 'SignIn',

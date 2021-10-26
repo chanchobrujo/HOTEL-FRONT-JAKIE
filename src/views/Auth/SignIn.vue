@@ -6,11 +6,11 @@
         <b-card header="INICIO DE SESIÓN" header-bg-variant="primary" header-text-variant="white">
           <b-card-text>
             <b-form @submit="onSubmit">
-              <b-form-group description="Enter your email." label="Email">
+              <b-form-group description="Ingrese su email." label="Email">
                 <b-form-input v-model="username" required type="email"> </b-form-input>
               </b-form-group>
 
-              <b-form-group description="Enter your password." label="Password">
+              <b-form-group description="Ingrese su contraseña." label="Password">
                 <b-form-input v-model="password" required type="password"> </b-form-input>
               </b-form-group>
               <hr />
@@ -25,6 +25,13 @@
                     {{ btnname }}
                   </span>
                 </b-button>
+              </b-form-group>
+              <br />
+
+              <b-form-group>
+                <router-link to="/SignUp" style="text-decoration: none;">
+                  Desea registrarse?
+                </router-link>
               </b-form-group>
               <br />
 
