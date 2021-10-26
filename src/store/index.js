@@ -13,20 +13,34 @@ export default new Vuex.Store({
     token: null,
     expired: true,
 
+    isAdmin: false,
+    isRecep: false,
+    isHuesp: false,
+
     products: [],
     product: {},
 
     types: [],
   },
   mutations: {
-    setToken(state, status) {
-      state.token = status;
-    },
     setEmail(state, status) {
       state.email = status;
     },
+    setToken(state, status) {
+      state.token = status;
+    },
     setExpired(state, status) {
       state.expired = status;
+    },
+
+    setIsAdmin(state, status) {
+      state.isAdmin = status;
+    },
+    setIsRecep(state, status) {
+      state.isRecep = status;
+    },
+    setIsHuesp(state, status) {
+      state.isHuesp = status;
     },
 
     SET_PRODUCTS(state, status) {
@@ -41,6 +55,12 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    async isRole({commit}, {isAdmin, isRecep, isHuesp}) {
+      commit('setIsAdmin', isAdmin);
+      commit('setIsRecep', isRecep);
+      commit('setIsHuesp', isHuesp);
+    },
+
     async getType({commit}, {id}) {
       try {
         const response = await axios.get('/typeroom/' + id);

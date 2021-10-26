@@ -45,7 +45,7 @@ const routes = [
     name: 'Rooms',
     component: Rooms,
     beforeEnter: (to, from, next) => {
-      if (store.state.expired == false) next();
+      if (store.state.expired == false && !store.state.isHuesp) next();
       else next('/');
     },
   },

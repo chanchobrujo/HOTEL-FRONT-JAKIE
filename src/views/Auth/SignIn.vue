@@ -81,6 +81,20 @@ export default {
         this.$store.commit('setToken', res.data.body.token);
         this.$store.commit('setExpired', isJwtExpired(res.data.body.token));
 
+        const role = res.data.body.authorities;
+
+        const isAdmin = this.findAuth('ROLE_ADMIN', role);
+        const isRecep = this.findAuth('ROLE_RECEP', role);
+        const isHuesp = this.findAuth('ROLE_HUESPED', role);
+
+        localStorage.setItem('isAdmin', isAdmin);
+        localStorage.setItem('isRecep', isRecep);
+        localStorage.setItem('isHuesp', isHuesp);
+
+        this.$store.commit('setIsAdmin', isAdmin);
+        this.$store.commit('setIsRecep', isRecep);
+        this.$store.commit('setIsHuesp', isHuesp);
+
         this.$router.replace({name: 'Menu'});
       } catch (error) {
         this.viewalert = true;
@@ -88,6 +102,12 @@ export default {
       } finally {
         this.loading = false;
       }
+    },
+    findAuth(rolename, array) {
+      if (array.filter((role) => role.authority == rolename) == 0) {
+        return false;
+      }
+      return true;
     },
   },
 };

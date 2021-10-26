@@ -33,7 +33,16 @@ axios.interceptors.request.use(
 
 try {
   var token = localStorage.getItem('token');
+
+  var isAdmin = localStorage.getItem('isAdmin');
+  var isRecep = localStorage.getItem('isRecep');
+  var isHuesp = localStorage.getItem('isHuesp');
+
   store.commit('setExpired', isJwtExpired(token));
+
+  store.commit('setIsAdmin', isAdmin);
+  store.commit('setIsRecep', isRecep);
+  store.commit('setIsHuesp', isHuesp);
 } catch (error) {
   store.commit('setExpired', true);
 }
