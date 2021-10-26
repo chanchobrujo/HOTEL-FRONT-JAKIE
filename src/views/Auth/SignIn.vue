@@ -49,6 +49,7 @@
 </template>
 
 <script>
+import {findAuth} from '../../Global';
 import {isJwtExpired} from 'jwt-check-expiration';
 
 export default {
@@ -83,9 +84,9 @@ export default {
 
         const role = res.data.body.authorities;
 
-        const isAdmin = this.findAuth('ROLE_ADMIN', role);
-        const isRecep = this.findAuth('ROLE_RECEP', role);
-        const isHuesp = this.findAuth('ROLE_HUESPED', role);
+        const isAdmin = findAuth('ROLE_ADMIN', role);
+        const isRecep = findAuth('ROLE_RECEP', role);
+        const isHuesp = findAuth('ROLE_HUESPED', role);
 
         localStorage.setItem('isAdmin', isAdmin);
         localStorage.setItem('isRecep', isRecep);
@@ -102,12 +103,6 @@ export default {
       } finally {
         this.loading = false;
       }
-    },
-    findAuth(rolename, array) {
-      if (array.filter((role) => role.authority == rolename) == 0) {
-        return false;
-      }
-      return true;
     },
   },
 };
