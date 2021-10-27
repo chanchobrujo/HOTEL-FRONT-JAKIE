@@ -102,6 +102,10 @@
             <b-icon v-else icon="exclamation-circle-fill" font-scale="2" variant="danger"></b-icon>
           </template>
 
+          <template #cell(photo)="data">
+            <img height="70" width="90" :src="data.value" />
+          </template>
+
           <template #cell(actions)="row">
             <b-button variant="outline-warning" size="sm" class="m-1" @click="update(row.item)">
               <b-icon icon="pencil-fill" aria-hidden="true"></b-icon>
@@ -152,7 +156,7 @@ export default {
   },
   data() {
     return {
-      fields: ['name', 'description', 'idtype', 'price', 'state', 'actions'],
+      fields: ['name', 'description', 'idtype', 'price', 'state', 'photo', 'actions'],
       isBusy: true,
       product: {
         id: '',

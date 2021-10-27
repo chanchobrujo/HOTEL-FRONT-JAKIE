@@ -84,6 +84,7 @@ export default new Vuex.Store({
       try {
         const response = await axios.get('/room/');
         const array = response.data;
+        console.log(array);
 
         commit('SET_PRODUCTS', array);
       } catch (error) {
