@@ -43,6 +43,7 @@ try {
   store.commit('setIsAdmin', isAdmin);
   store.commit('setIsRecep', isRecep);
   store.commit('setIsHuesp', isHuesp);
+  store.dispatch('findUserByEmail');
 } catch (error) {
   store.commit('setExpired', true);
 }

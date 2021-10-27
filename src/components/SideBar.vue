@@ -53,9 +53,15 @@ export default {
     show: Boolean,
   },
   created() {
+    this.getMyData();
     this.routes = routesByRole();
   },
   methods: {
+    async getMyData() {
+      //setTimeout(() => {
+      //  this.isBusy = false;
+      //}, 2000);
+    },
     async closeSession() {
       this.btnname = 'Cerrando';
       this.loading = true;

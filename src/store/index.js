@@ -4,6 +4,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 
 import axios from 'axios';
+import jwt_decode from 'jwt-decode';
 
 Vue.use(Vuex);
 
@@ -19,6 +20,8 @@ export default new Vuex.Store({
 
     products: [],
     product: {},
+
+    userdto: {},
 
     types: [],
   },
@@ -53,6 +56,10 @@ export default new Vuex.Store({
     SET_TYPES(state, status) {
       state.types = status;
     },
+
+    SET_USERDTO(state, status) {
+      state.userdto = status;
+    },
   },
   actions: {
     async isRole({commit}, {isAdmin, isRecep, isHuesp}) {
@@ -84,7 +91,6 @@ export default new Vuex.Store({
       try {
         const response = await axios.get('/room/');
         const array = response.data;
-        console.log(array);
 
         commit('SET_PRODUCTS', array);
       } catch (error) {
@@ -120,6 +126,17 @@ export default new Vuex.Store({
         return res.data.message;
       } catch (error) {
         return error.response.data.message;
+      }
+    },
+
+    async findUserByEmail({commit}) {
+      try {
+        let email = jwt_decode(localStorage.getItem('token')).sub;
+
+        const response = await axios.get('/profile/findByEmail/' + email);
+        commit('SET_USERDTO', response.data);
+      } catch (error) {
+        console.error(error);
       }
     },
   },
