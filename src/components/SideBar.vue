@@ -7,12 +7,21 @@
         <div class="p-3">
           <nav class="mb-3">
             <Profile />
+
+            <br />
+
             <b-nav vertical v-for="item in routes" :key="item.name">
-              <router-link :to="item.link" style="text-decoration: none; ">
-                {{ item.name }}
-              </router-link>
+              <span class="my-3">
+                <router-link :to="item.link" style="text-decoration: none;">
+                  <b-button variant="outline-primary" block>
+                    {{ item.name }}
+                  </b-button>
+                </router-link>
+              </span>
             </b-nav>
           </nav>
+
+          <hr />
           <b-button variant="primary" @click="closeSession" class="btn btn-primary btn-block">
             <span v-if="loading">
               <b-spinner small type="grow"></b-spinner>
