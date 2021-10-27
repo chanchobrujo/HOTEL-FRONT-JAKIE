@@ -7,9 +7,9 @@
         <div class="p-3">
           <nav class="mb-3">
             <Profile />
-            <b-nav vertical>
-              <router-link to="/Rooms" style="text-decoration: none; ">
-                Mantenimiento de habitaciones
+            <b-nav vertical v-for="item in routes" :key="item.name">
+              <router-link :to="item.link" style="text-decoration: none; ">
+                {{ item.name }}
               </router-link>
             </b-nav>
           </nav>
@@ -29,16 +29,22 @@
 </template>
 
 <script>
+import {routesByRole} from '../Global';
 import Profile from './Profile.vue';
+
 export default {
   data() {
     return {
       loading: false,
       btnname: 'Cerrar sesión',
+      routes: [],
     };
   },
   props: {
     show: Boolean,
+  },
+  created() {
+    this.routes = routesByRole();
   },
   methods: {
     async closeSession() {

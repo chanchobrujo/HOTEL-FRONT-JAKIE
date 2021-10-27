@@ -34,9 +34,9 @@ axios.interceptors.request.use(
 try {
   var token = localStorage.getItem('token');
 
-  var isAdmin = localStorage.getItem('isAdmin');
-  var isRecep = localStorage.getItem('isRecep');
-  var isHuesp = localStorage.getItem('isHuesp');
+  var isAdmin = JSON.parse(localStorage.getItem('isAdmin'));
+  var isRecep = JSON.parse(localStorage.getItem('isRecep'));
+  var isHuesp = JSON.parse(localStorage.getItem('isHuesp'));
 
   store.commit('setExpired', isJwtExpired(token));
 

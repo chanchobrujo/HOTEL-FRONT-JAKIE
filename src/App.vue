@@ -20,10 +20,5 @@ export default {
     Nav,
     SideBar,
   },
-
-  mounted() {
-    console.log('HERE! ');
-  },
-  methods: {},
 };
 </script>
