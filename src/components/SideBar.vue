@@ -59,7 +59,6 @@ export default {
       setTimeout(() => {
         localStorage.clear();
 
-        this.$store.commit('setExpired', true);
         this.$store.dispatch('clear');
         this.$router.replace({name: 'SignIn'});
 

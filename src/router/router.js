@@ -10,6 +10,7 @@ import Menu from '../views/Templates/Menu.vue';
 
 import Rooms from '../views/Templates/Rooms.vue';
 import Users from '../views/Templates/Users.vue';
+import Reservations from '../views/Templates/Reservations.vue';
 
 import store from '../store/index.js';
 
@@ -58,6 +59,15 @@ const routes = [
     component: Users,
     beforeEnter: (to, from, next) => {
       if (store.state.expired == false && store.state.isAdmin) next();
+      else next('/');
+    },
+  },
+  {
+    path: '/Reservations',
+    name: 'Reservations',
+    component: Reservations,
+    beforeEnter: (to, from, next) => {
+      if (store.state.expired == false) next();
       else next('/');
     },
   },

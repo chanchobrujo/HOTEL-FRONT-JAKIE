@@ -19,16 +19,9 @@
 </template>
 
 <script>
-import {noImage} from '../Global';
 export default {
-  data() {
-    return {
-      name: noImage(),
-    };
-  },
   props: {
     show: Boolean,
   },
-  methods: {},
 };
 </script>

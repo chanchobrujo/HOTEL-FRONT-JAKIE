@@ -8,6 +8,8 @@ import jwt_decode from 'jwt-decode';
 import {findAuth, routesByRole} from '../Global';
 import {isJwtExpired} from 'jwt-check-expiration';
 
+import VuexPersistence from 'vuex-persist';
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -144,6 +146,7 @@ export default new Vuex.Store({
     },
 
     async clear({commit}) {
+      commit('setExpired', true);
       commit('SET_USERDTO', '');
       commit('setToken', '');
     },
@@ -159,4 +162,9 @@ export default new Vuex.Store({
     },
   },
   modules: {},
+  plugins: [
+    new VuexPersistence({
+      storage: window.localStorage,
+    }).plugin,
+  ],
 });
