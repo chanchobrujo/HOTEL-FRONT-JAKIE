@@ -5,8 +5,11 @@ import VueRouter from 'vue-router';
 
 import SignIn from '../views/Auth/SignIn.vue';
 import SignUp from '../views/Auth/SignUp.vue';
+
 import Menu from '../views/Templates/Menu.vue';
+
 import Rooms from '../views/Templates/Rooms.vue';
+import Users from '../views/Templates/Users.vue';
 
 import store from '../store/index.js';
 
@@ -46,6 +49,15 @@ const routes = [
     component: Rooms,
     beforeEnter: (to, from, next) => {
       if (store.state.expired == false && !store.state.isHuesp) next();
+      else next('/');
+    },
+  },
+  {
+    path: '/Users',
+    name: 'Users',
+    component: Users,
+    beforeEnter: (to, from, next) => {
+      if (store.state.expired == false && store.state.isAdmin) next();
       else next('/');
     },
   },
