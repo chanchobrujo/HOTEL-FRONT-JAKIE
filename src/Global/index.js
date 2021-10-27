@@ -38,6 +38,6 @@ export function findAuth(rolename, array) {
   return true;
 }
 
-export function noImage(firstname, lastname) {
-  return firstname.charAt(0) + lastname.charAt(0);
+export function noImage() {
+  return store.state.firtsname.charAt(0) + store.state.lastname.charAt(0);
 }

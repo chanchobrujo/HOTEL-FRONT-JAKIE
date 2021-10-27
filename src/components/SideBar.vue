@@ -38,7 +38,6 @@
 </template>
 
 <script>
-import {routesByRole} from '../Global';
 import Profile from './Profile.vue';
 
 export default {
@@ -46,15 +45,10 @@ export default {
     return {
       loading: false,
       btnname: 'Cerrar sesión',
-      routes: [],
     };
   },
   props: {
     show: Boolean,
-  },
-  created() {
-    this.routes = routesByRole();
-    console.log(this.routes);
   },
   methods: {
     async closeSession() {
