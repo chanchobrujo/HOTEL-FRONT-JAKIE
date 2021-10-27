@@ -38,12 +38,6 @@ export function findAuth(rolename, array) {
   return true;
 }
 
-/* ,
-      {
-        name: 'Hacer una reservación',
-        link: '/Reservations',
-      },
-      {
-        name: 'Mantenimiento de usuarios',
-        link: '/Users',
-      }, */
+export function noImage(firstname, lastname) {
+  return firstname.charAt(0) + lastname.charAt(0);
+}

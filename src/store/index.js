@@ -5,13 +5,15 @@ import Vuex from 'vuex';
 
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
+import {findAuth} from '../Global';
+import {isJwtExpired} from 'jwt-check-expiration';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     email: '',
-    token: null,
+    token: '',
     expired: true,
 
     isAdmin: false,
@@ -21,9 +23,9 @@ export default new Vuex.Store({
     products: [],
     product: {},
 
-    userdto: {},
+    userdto: '',
 
-    types: [],
+    types: {},
   },
   mutations: {
     setEmail(state, status) {
@@ -62,10 +64,9 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    async isRole({commit}, {isAdmin, isRecep, isHuesp}) {
-      commit('setIsAdmin', isAdmin);
-      commit('setIsRecep', isRecep);
-      commit('setIsHuesp', isHuesp);
+    async addToken({commit}, {token}) {
+      commit('setToken', token);
+      commit('setExpired', isJwtExpired(token));
     },
 
     async getType({commit}, {id}) {
@@ -129,15 +130,24 @@ export default new Vuex.Store({
       }
     },
 
-    async findUserByEmail({commit}) {
+    async findUserByEmail({commit}, {xy}) {
       try {
-        let email = jwt_decode(localStorage.getItem('token')).sub;
+        let email = jwt_decode(xy).sub;
 
         const response = await axios.get('/profile/findByEmail/' + email);
         commit('SET_USERDTO', response.data);
-      } catch (error) {
-        console.error(error);
-      }
+      } catch (error) {}
+    },
+
+    async clear({commit}) {
+      commit('SET_USERDTO', '');
+      commit('setToken', '');
+    },
+
+    async defineRoles({commit}, {roles}) {
+      commit('setIsAdmin', findAuth('ROLE_ADMIN', roles));
+      commit('setIsRecep', findAuth('ROLE_RECEP', roles));
+      commit('setIsHuesp', findAuth('ROLE_HUESPED', roles));
     },
   },
   modules: {},

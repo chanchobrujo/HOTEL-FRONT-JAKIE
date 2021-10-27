@@ -53,24 +53,23 @@ export default {
     show: Boolean,
   },
   created() {
-    this.getMyData();
     this.routes = routesByRole();
   },
   methods: {
-    async getMyData() {
-      //setTimeout(() => {
-      //  this.isBusy = false;
-      //}, 2000);
-    },
     async closeSession() {
       this.btnname = 'Cerrando';
+
       this.loading = true;
 
       setTimeout(() => {
         localStorage.clear();
+
         this.$store.commit('setExpired', true);
+        this.$store.dispatch('clear');
         this.$router.replace({name: 'SignIn'});
+
         this.loading = false;
+        this.btnname = 'Cerrar sesión';
       }, 2000);
     },
   },

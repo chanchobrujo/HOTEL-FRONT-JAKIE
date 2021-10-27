@@ -23,30 +23,16 @@ Vue.use(VueAxios, axios);
 axios.defaults.baseURL = 'http://localhost:9095';
 axios.interceptors.request.use(
   (config) => {
-    config.headers.authorization = `Bearer ${localStorage.getItem('token')}`;
+    config.headers.authorization = `Bearer ${store.state.token}`;
     return config;
   },
   (error) => {
+    console.log(error);
     return Promise.reject(error);
   }
 );
 
-try {
-  var token = localStorage.getItem('token');
-
-  var isAdmin = JSON.parse(localStorage.getItem('isAdmin'));
-  var isRecep = JSON.parse(localStorage.getItem('isRecep'));
-  var isHuesp = JSON.parse(localStorage.getItem('isHuesp'));
-
-  store.commit('setExpired', isJwtExpired(token));
-
-  store.commit('setIsAdmin', isAdmin);
-  store.commit('setIsRecep', isRecep);
-  store.commit('setIsHuesp', isHuesp);
-  store.dispatch('findUserByEmail');
-} catch (error) {
-  store.commit('setExpired', true);
-}
+//
 
 new Vue({
   router,

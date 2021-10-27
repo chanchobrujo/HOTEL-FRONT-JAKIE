@@ -163,7 +163,7 @@ export default {
         name: '',
         description: '',
         price: 50,
-        type: '',
+        type: {},
       },
 
       loading: false,

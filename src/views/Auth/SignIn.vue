@@ -49,9 +49,6 @@
 </template>
 
 <script>
-import {findAuth} from '../../Global';
-import {isJwtExpired} from 'jwt-check-expiration';
-
 export default {
   data() {
     return {
@@ -66,6 +63,7 @@ export default {
       message: '',
     };
   },
+  created() {},
   methods: {
     async onSubmit(event) {
       event.preventDefault();
@@ -78,23 +76,17 @@ export default {
           password: this.password,
         });
 
-        localStorage.setItem('token', res.data.body.token);
-        this.$store.commit('setToken', res.data.body.token);
-        this.$store.commit('setExpired', isJwtExpired(res.data.body.token));
+        this.$store.dispatch('addToken', {
+          token: res.data.body.token,
+        });
 
-        const role = res.data.body.authorities;
+        this.$store.dispatch('findUserByEmail', {
+          xy: res.data.body.token,
+        });
 
-        const isAdmin = findAuth('ROLE_ADMIN', role);
-        const isRecep = findAuth('ROLE_RECEP', role);
-        const isHuesp = findAuth('ROLE_HUESPED', role);
-
-        localStorage.setItem('isAdmin', isAdmin);
-        localStorage.setItem('isRecep', isRecep);
-        localStorage.setItem('isHuesp', isHuesp);
-
-        this.$store.commit('setIsAdmin', isAdmin);
-        this.$store.commit('setIsRecep', isRecep);
-        this.$store.commit('setIsHuesp', isHuesp);
+        this.$store.dispatch('defineRoles', {
+          roles: res.data.body.authorities,
+        });
 
         this.$router.replace({name: 'Menu'});
       } catch (error) {
