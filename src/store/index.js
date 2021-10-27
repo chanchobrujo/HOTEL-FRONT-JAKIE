@@ -5,7 +5,7 @@ import Vuex from 'vuex';
 
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
-import {findAuth} from '../Global';
+import {findAuth, routesByRole} from '../Global';
 import {isJwtExpired} from 'jwt-check-expiration';
 
 Vue.use(Vuex);
@@ -22,10 +22,11 @@ export default new Vuex.Store({
 
     products: [],
     product: {},
+    types: {},
 
     userdto: '',
 
-    types: {},
+    routes: [],
   },
   mutations: {
     setEmail(state, status) {
@@ -46,6 +47,9 @@ export default new Vuex.Store({
     },
     setIsHuesp(state, status) {
       state.isHuesp = status;
+    },
+    setRoutes(state, status) {
+      state.routes = status;
     },
 
     SET_PRODUCTS(state, status) {
@@ -148,6 +152,10 @@ export default new Vuex.Store({
       commit('setIsAdmin', findAuth('ROLE_ADMIN', roles));
       commit('setIsRecep', findAuth('ROLE_RECEP', roles));
       commit('setIsHuesp', findAuth('ROLE_HUESPED', roles));
+    },
+
+    async defineRoutes({commit}) {
+      commit('setRoutes', routesByRole());
     },
   },
   modules: {},

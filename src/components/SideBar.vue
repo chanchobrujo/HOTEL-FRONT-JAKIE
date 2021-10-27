@@ -10,7 +10,7 @@
 
             <br />
 
-            <b-nav vertical v-for="item in routes" :key="item.name">
+            <b-nav vertical v-for="item in $store.state.routes" :key="item.name">
               <span class="my-3">
                 <router-link :to="item.link" style="text-decoration: none;">
                   <b-button variant="outline-primary" block>
@@ -54,6 +54,7 @@ export default {
   },
   created() {
     this.routes = routesByRole();
+    console.log(this.routes);
   },
   methods: {
     async closeSession() {

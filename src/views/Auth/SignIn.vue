@@ -88,6 +88,8 @@ export default {
           roles: res.data.body.authorities,
         });
 
+        this.$store.dispatch('defineRoutes');
+
         this.$router.replace({name: 'Menu'});
       } catch (error) {
         this.viewalert = true;
