@@ -14,7 +14,6 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    email: '',
     token: '',
     expired: true,
 
@@ -31,9 +30,6 @@ export default new Vuex.Store({
     routes: [],
   },
   mutations: {
-    setEmail(state, status) {
-      state.email = status;
-    },
     setToken(state, status) {
       state.token = status;
     },
@@ -112,6 +108,7 @@ export default new Vuex.Store({
           description: product.description,
           price: product.price,
           idtype: product.type,
+          photo: product.photo,
         });
 
         return res.data.message;

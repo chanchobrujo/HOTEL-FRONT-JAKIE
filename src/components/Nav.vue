@@ -11,7 +11,7 @@
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav>
         <router-link to="/Menu" style="text-decoration: none;color: white">
-          Sistema administrativo
+          {{ 'Bienvenida ' + $store.state.userdto.firtsname + ' ' + $store.state.userdto.lastname }}
         </router-link>
       </b-navbar-nav>
     </b-collapse>

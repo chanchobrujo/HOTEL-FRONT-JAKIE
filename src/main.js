@@ -32,7 +32,9 @@ axios.interceptors.request.use(
   }
 );
 
-//
+try {
+  store.commit('setExpired', isJwtExpired(store.state.token));
+} catch (error) {}
 
 new Vue({
   router,

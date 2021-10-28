@@ -3,7 +3,7 @@
 <template>
   <b-container>
     <b-row class="justify-content-md-center mt-4">
-      <b-col col md="4">
+      <b-col col md="5">
         <b-card
           header="Mantenimiento de habitaciones"
           header-bg-variant="primary"
@@ -13,23 +13,20 @@
             <!-- FORMULARIO DE REGISTRO DE HABITACIONES -->
             <b-form @submit="onSubmit">
               <!-- -->
-              <b-form-group class="mb-3" description="Ingrese nombre de habitación." label="Nombre">
-                <b-form-input v-model="product.name" required type="text"> </b-form-input>
-              </b-form-group>
+              <b-input-group class="mb-3">
+                <b-form-input v-model="product.name" placeholder="Nombre" required type="text">
+                </b-form-input>
+                <b-form-input
+                  v-model="product.description"
+                  placeholder="Descripción"
+                  required
+                  type="text"
+                >
+                </b-form-input>
+              </b-input-group>
               <!-- -->
-              <b-form-group
-                class="mb-3"
-                description="Ingrese descripción de habitación."
-                label="Descripción"
-              >
-                <b-form-input v-model="product.description" required type="text"> </b-form-input>
-              </b-form-group>
-              <!-- -->
-              <b-form-group class="mb-3" description="Ingrese precio de habitación." label="Precio">
+              <b-input-group class="mb-3">
                 <b-form-input v-model="product.price" required type="number"> </b-form-input>
-              </b-form-group>
-              <!-- -->
-              <b-form-group class="mb-3" label="Tipo">
                 <b-form-select
                   v-model="product.type"
                   :options="$store.state.types"
@@ -44,7 +41,19 @@
                     </b-form-select-option>
                   </template>
                 </b-form-select>
+              </b-input-group>
+              <!-- -->
+              <b-form-group class="mb-3">
+                <b-form-file v-model="file" accept="image/*"></b-form-file>
+                <b-button @click="EncriptImagenAbase64()" variant="link">
+                  Ver imagen
+                </b-button>
               </b-form-group>
+              <!-- -->
+              <b-form-group class="mb-3">
+                <b-img v-bind="imageprops" center :src="product.photo"></b-img>
+              </b-form-group>
+              <!-- -->
               <hr />
               <!-- -->
               <b-form-group>
@@ -54,7 +63,7 @@
                   </span>
                   <b-icon icon="cloud-upload" aria-hidden="true"></b-icon>
                 </b-button>
-                <b-button class="mx-2" variant="outline-primary" @click="clear()">
+                <b-button class="mx-2" @click="clear()" variant="outline-primary">
                   <b-icon icon="arrow90deg-left" aria-hidden="true"></b-icon>
                 </b-button>
               </b-form-group>
@@ -70,9 +79,10 @@
           </b-card-text>
         </b-card>
       </b-col>
-      <b-col col md="8">
+      <b-col col md="7">
         <!-- TABLA DE HABITACIONES -->
         <b-table
+          sticky-header
           responsive
           hover
           :busy="isBusy"
@@ -103,7 +113,7 @@
           </template>
 
           <template #cell(photo)="data">
-            <img height="70" width="90" :src="data.value" />
+            <b-img height="70" width="90" v-bind="imageprops" center :src="data.value"></b-img>
           </template>
 
           <template #cell(actions)="row">
@@ -150,12 +160,15 @@
 
 <script>
 import TypeRoomSpan from '../../components/TypeRoomSpan.vue';
+import {getBase64} from '../../Global';
+
 export default {
   components: {
     TypeRoomSpan,
   },
   data() {
     return {
+      imageprops: {width: '150%', class: 'm1'},
       fields: ['name', 'description', 'idtype', 'price', 'state', 'photo', 'actions'],
       isBusy: true,
       product: {
@@ -164,7 +177,9 @@ export default {
         description: '',
         price: 50,
         type: {},
+        photo: '',
       },
+      file: null,
 
       loading: false,
 
@@ -192,6 +207,8 @@ export default {
       this.product.name = '';
       this.product.description = '';
       this.product.price = 50;
+      this.product.photo = '';
+      this.file = null;
     },
     async deleteProduct(id) {
       this.isBusy = true;
@@ -230,6 +247,14 @@ export default {
       this.product.description = item.description;
       this.product.price = item.price;
       this.product.type = item.idtype;
+      this.product.photo = item.photo;
+    },
+    async EncriptImagenAbase64() {
+      try {
+        this.product.photo = await getBase64(this.file);
+      } catch (error) {
+        this.product.photo = '';
+      }
     },
   },
 };
