@@ -6,11 +6,11 @@ import VueRouter from 'vue-router';
 import SignIn from '../views/Auth/SignIn.vue';
 import SignUp from '../views/Auth/SignUp.vue';
 
-import Menu from '../views/Templates/Menu.vue';
+import Reservations from '../views/Templates/Menu.vue';
+import SelectedRoom from '../views/Templates/SelectedRoom.vue';
 
 import Rooms from '../views/Templates/Rooms.vue';
 import Users from '../views/Templates/Users.vue';
-import Reservations from '../views/Templates/Reservations.vue';
 
 import store from '../store/index.js';
 
@@ -18,27 +18,36 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/SignUp',
-    name: 'SignUp',
-    component: SignUp,
-    beforeEnter: (to, from, next) => {
-      if (store.state.expired == true) next();
-      else next('/Menu');
-    },
-  },
-  {
     path: '/',
     name: 'SignIn',
     component: SignIn,
     beforeEnter: (to, from, next) => {
       if (store.state.expired == true) next();
-      else next('/Menu');
+      else next('/Reservations');
     },
   },
   {
-    path: '/Menu',
-    name: 'Menu',
-    component: Menu,
+    path: '/SignUp',
+    name: 'SignUp',
+    component: SignUp,
+    beforeEnter: (to, from, next) => {
+      if (store.state.expired == true) next();
+      else next('/Reservations');
+    },
+  },
+  {
+    path: '/Reservations',
+    name: 'Reservations',
+    component: Reservations,
+    beforeEnter: (to, from, next) => {
+      if (store.state.expired == false) next();
+      else next('/');
+    },
+  },
+  {
+    path: '/SelectedRoom/:id/:d1/:d2',
+    name: 'SelectedRoom',
+    component: SelectedRoom,
     beforeEnter: (to, from, next) => {
       if (store.state.expired == false) next();
       else next('/');
@@ -63,18 +72,9 @@ const routes = [
     },
   },
   {
-    path: '/Reservations',
-    name: 'Reservations',
-    component: Reservations,
-    beforeEnter: (to, from, next) => {
-      if (store.state.expired == false) next();
-      else next('/');
-    },
-  },
-  {
     path: '*',
     beforeEnter: (to, from, next) => {
-      if (store.state.expired == false) next('/Menu');
+      if (store.state.expired == false) next('/Reservations');
       else next('/');
     },
   },

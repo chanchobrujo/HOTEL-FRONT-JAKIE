@@ -90,7 +90,7 @@ export default {
 
         this.$store.dispatch('defineRoutes');
 
-        this.$router.replace({name: 'Menu'});
+        this.$router.replace({name: 'Reservations'});
       } catch (error) {
         this.viewalert = true;
         this.message = error.response.data.message;

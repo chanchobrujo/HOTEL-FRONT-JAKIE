@@ -10,7 +10,7 @@
 
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav>
-        <router-link to="/Menu" style="text-decoration: none;color: white">
+        <router-link to="/Reservations" style="text-decoration: none;color: white">
           {{ 'Bienvenida ' + $store.state.userdto.firtsname + ' ' + $store.state.userdto.lastname }}
         </router-link>
       </b-navbar-nav>

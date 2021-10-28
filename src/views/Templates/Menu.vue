@@ -2,12 +2,152 @@
 
 <template>
   <b-container>
-    <div>Menu</div>
+    <b-row class="justify-content-md-center mt-4">
+      <b-col col md="3">
+        <b-card
+          header="Buscar habitaciones disponibles"
+          header-bg-variant="primary"
+          header-text-variant="white"
+        >
+          <b-card-text>
+            <b-form @submit="onSubmit">
+              <b-input-group class="mb-3">
+                <b-form-datepicker
+                  v-model="from.date1"
+                  placeholder="Fecha de inicio"
+                  class="mb-2"
+                  required
+                ></b-form-datepicker>
+              </b-input-group>
+              <b-input-group class="mb-3">
+                <b-form-datepicker
+                  v-model="from.date2"
+                  placeholder="Fecha de fin"
+                  class="mb-2"
+                  required
+                ></b-form-datepicker>
+              </b-input-group>
+              <b-input-group class="mb-3">
+                <b-form-select
+                  v-model="from.idtype"
+                  :options="$store.state.types"
+                  value-field="idtyperoom"
+                  text-field="name"
+                  disabled-field="!state"
+                  required
+                >
+                  <template #first>
+                    <b-form-select-option value="" disabled>
+                      -- Please select an option --
+                    </b-form-select-option>
+                  </template>
+                </b-form-select>
+              </b-input-group>
+              <hr />
+              <b-form-group>
+                <b-button type="submit" class="mx-2" variant="outline-primary">
+                  <span v-if="btn.loading">
+                    <b-spinner small type="grow"></b-spinner>
+                  </span>
+                  Buscar habitaciones
+                </b-button>
+              </b-form-group>
+            </b-form>
+          </b-card-text>
+        </b-card>
+      </b-col>
+      <b-col col md="9">
+        <b-table
+          sticky-header
+          responsive
+          hover
+          :busy="tablepro.isBusy"
+          :items="rooms"
+          caption-top
+          :fields="fields"
+          outlined
+        >
+          <template #table-busy>
+            <div class="text-center text-primary my-2 mt-2">
+              <b-spinner class="align-middle"></b-spinner>
+            </div>
+          </template>
+
+          <!-- Celda del id del tipo de habitación -->
+          <template #cell(idtype)="data">
+            <TypeRoomSpan :id="data.value" />
+          </template>
+
+          <template #cell(photo)="data">
+            <b-img width="175%" :src="data.value"></b-img>
+          </template>
+          <template #cell(actions)="row">
+            <b-button
+              @click="update(row.item.idroomm)"
+              block
+              variant="outline-warning"
+              size="sm"
+              class="m-1"
+            >
+              <b-icon icon="bell-fill" aria-hidden="true"></b-icon>
+            </b-button>
+          </template>
+          <template #table-caption>Habitaciones.</template>
+        </b-table>
+      </b-col>
+    </b-row>
   </b-container>
 </template>
 
 <script>
+import TypeRoomSpan from '../../components/TypeRoomSpan.vue';
 export default {
+  components: {
+    TypeRoomSpan,
+  },
+  data() {
+    return {
+      tablepro: {
+        isBusy: false,
+      },
+      fields: ['name', 'idtype', 'price', 'photo', 'actions'],
+      from: {
+        date1: '',
+        date2: '',
+        idtype: '',
+      },
+      rooms: [],
+      btn: {
+        loading: false,
+      },
+    };
+  },
   created() {},
+  methods: {
+    async onSubmit(event) {
+      event.preventDefault();
+      this.btn.loading = true;
+      this.tablepro.isBusy = true;
+      const array = await this.$store.dispatch('findByAvaliable', {
+        from: this.from,
+      });
+
+      setTimeout(() => {
+        this.rooms = array;
+        this.btn.loading = false;
+        this.tablepro.isBusy = false;
+      }, 2000);
+    },
+    async update(id) {
+      this.$router.replace({
+        name: 'SelectedRoom',
+        params: {
+          id: id,
+          d1: this.from.date1,
+          d2: this.from.date2,
+        },
+      });
+    },
+  },
 };
 </script>

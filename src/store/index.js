@@ -100,6 +100,14 @@ export default new Vuex.Store({
         console.error(error);
       }
     },
+
+    async getProductsById({commit}, {id}) {
+      try {
+        const response = await axios.get('/room/findById/' + id);
+        const array = response.data;
+        return array;
+      } catch (error) {}
+    },
     async addProduct({commit}, {product}) {
       try {
         const res = await axios.post('/room/save', {
@@ -157,6 +165,47 @@ export default new Vuex.Store({
     async defineRoutes({commit}) {
       commit('setRoutes', routesByRole());
     },
+
+    async findByAvaliable({commit}, {from}) {
+      try {
+        const res = await axios.get(
+          '/reservation/findByAvaliable/' + from.date1 + '/' + from.date2 + '/' + from.idtype
+        );
+        return res.data;
+      } catch (error) {}
+    },
+
+    async CalculateSelectedRoom({commit}, {from}) {
+      try {
+        const res = await axios.get(
+          '/reservation/CalculateSelectedRoom/' + from.idroom + '/' + from.date1 + '/' + from.date2
+        );
+        return res.data.body;
+      } catch (error) {}
+    },
+
+    async saveReservation({commit}, {guest, date1, date2, idroom, iduser, data, requirements}) {
+      try {
+        const res = await axios.post('/reservation/save', {
+          dni: guest.dni,
+          firtsname: guest.firtsname,
+          lastname: guest.lastname,
+          email: guest.email,
+          phone: guest.phone,
+          date_ini: date1,
+          date_end: date2,
+          idroom: idroom,
+          iduser: iduser,
+          subtotal: data.subtotal,
+          tax: data.tax,
+          total: data.total,
+          requirements: requirements,
+        });
+        return res.data.message;
+      } catch (error) {
+        return error.response.data.message;
+      }
+    },
   },
   modules: {},
   plugins: [
@@ -165,3 +214,7 @@ export default new Vuex.Store({
     }).plugin,
   ],
 });
+
+//reservation
+//CalculateSelectedRoom/{idroom}/{date1}/{date2}
+//save

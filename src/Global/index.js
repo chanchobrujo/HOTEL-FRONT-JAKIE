@@ -22,19 +22,15 @@ export function routesByRole() {
     name: 'Mantenimiento de usuarios',
     link: '/Users',
   };
-  const objRes = {
-    name: 'Mantenimiento de reservaciones',
-    link: '/Reservations',
-  };
 
   if (store.state.isAdmin == true) {
-    routes.push(objRoom, objUser, objRes);
+    routes.push(objRoom, objUser);
   }
   if (store.state.isRecep == true) {
-    routes.push(objRoom, objRes);
+    routes.push(objRoom);
   }
   if (store.state.isHuesp == true) {
-    routes.push(objRes);
+    routes.push();
   }
 
   return routes;
