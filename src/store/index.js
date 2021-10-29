@@ -201,9 +201,10 @@ export default new Vuex.Store({
           total: data.total,
           requirements: requirements,
         });
-        return res.data.message;
+        console.log(res.data.message);
+        return res.data;
       } catch (error) {
-        return error.response.data.message;
+        return error.response.data;
       }
     },
   },
