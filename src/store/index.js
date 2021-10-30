@@ -225,6 +225,30 @@ export default new Vuex.Store({
         return error.response.data.message;
       }
     },
+    async mostUsedRoomTypes({commit}) {
+      try {
+        const response = await axios.get('/report/mostUsedRoomTypes');
+        return response.data.body;
+      } catch (error) {
+        return error.response.data.message;
+      }
+    },
+    async allReservations({commit}) {
+      try {
+        const response = await axios.get('/report/allReservations');
+        return response.data.body;
+      } catch (error) {
+        return error.response.data.message;
+      }
+    },
+    async promReservationsTime({commit}) {
+      try {
+        const response = await axios.get('/report/promReservationsTime');
+        return response.data.body;
+      } catch (error) {
+        return error.response.data.message;
+      }
+    },
   },
   modules: {},
   plugins: [

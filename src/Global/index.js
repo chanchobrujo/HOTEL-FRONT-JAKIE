@@ -14,6 +14,10 @@ export async function getBase64(file) {
 export function routesByRole() {
   const routes = [];
 
+  const reports = {
+    name: 'Reportes',
+    link: '/Reports',
+  };
   const objRoom = {
     name: 'Mantenimiento de habitaciones',
     link: '/Rooms',
@@ -24,7 +28,7 @@ export function routesByRole() {
   };
 
   if (store.state.isAdmin == true) {
-    routes.push(objRoom, objUser);
+    routes.push(objRoom, objUser, reports);
   }
   if (store.state.isRecep == true) {
     routes.push(objRoom);

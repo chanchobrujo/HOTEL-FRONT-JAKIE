@@ -14,7 +14,6 @@
 //Jpicoyrosas@gmail.com
 import Nav from './components/Nav.vue';
 import SideBar from './components/SideBar.vue';
-
 export default {
   components: {
     Nav,

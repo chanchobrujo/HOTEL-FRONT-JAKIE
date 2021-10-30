@@ -8,6 +8,7 @@ import SignUp from '../views/Auth/SignUp.vue';
 
 import Reservations from '../views/Templates/Menu.vue';
 import SelectedRoom from '../views/Templates/SelectedRoom.vue';
+import Reports from '../views/Templates/Reports.vue';
 
 import Rooms from '../views/Templates/Rooms.vue';
 import Users from '../views/Templates/Users.vue';
@@ -58,8 +59,9 @@ const routes = [
     name: 'Rooms',
     component: Rooms,
     beforeEnter: (to, from, next) => {
-      if (store.state.expired == false && !store.state.isHuesp) next();
-      else next('/');
+      if (!store.state.isHuesp && !store.state.expired) next();
+      if (store.state.isHuesp) next('/Reservations');
+      if (store.state.expired == true) next('/');
     },
   },
   {
@@ -67,8 +69,19 @@ const routes = [
     name: 'Users',
     component: Users,
     beforeEnter: (to, from, next) => {
-      if (store.state.expired == false && store.state.isAdmin) next();
-      else next('/');
+      if (store.state.isAdmin && !store.state.expired) next();
+      if (!store.state.isAdmin) next('/Reservations');
+      if (store.state.expired == true) next('/');
+    },
+  },
+  {
+    path: '/Reports',
+    name: 'Reports',
+    component: Reports,
+    beforeEnter: (to, from, next) => {
+      if (store.state.isAdmin && !store.state.expired) next();
+      if (!store.state.isAdmin) next('/Reservations');
+      if (store.state.expired == true) next('/');
     },
   },
   {
