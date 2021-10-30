@@ -158,10 +158,9 @@ export default new Vuex.Store({
 
     async defineRoles({commit}, {roles}) {
       commit('setIsAdmin', findAuth('ROLE_ADMIN', roles));
-      commit('setIsRecep', findAuth('ROLE_RECEP', roles));
+      commit('setIsRecep', findAuth('ROLE_RECP', roles));
       commit('setIsHuesp', findAuth('ROLE_HUESPED', roles));
     },
-
     async defineRoutes({commit}) {
       commit('setRoutes', routesByRole());
     },
@@ -174,7 +173,6 @@ export default new Vuex.Store({
         return res.data;
       } catch (error) {}
     },
-
     async CalculateSelectedRoom({commit}, {from}) {
       try {
         const res = await axios.get(
@@ -183,7 +181,6 @@ export default new Vuex.Store({
         return res.data.body;
       } catch (error) {}
     },
-
     async saveReservation({commit}, {guest, date1, date2, idroom, iduser, data, requirements}) {
       try {
         const res = await axios.post('/reservation/save', {
@@ -205,6 +202,27 @@ export default new Vuex.Store({
         return res.data;
       } catch (error) {
         return error.response.data;
+      }
+    },
+
+    async getUsers({commit}) {
+      try {
+        const response = await axios.get('/user/findAll');
+        const array = response.data;
+        return array;
+      } catch (error) {}
+    },
+    async addUser({commit}, {user}) {
+      try {
+        const response = await axios.post('/user/save', {
+          firtsname: user.firtsname,
+          lastname: user.lastname,
+          number: user.number,
+          email: user.email,
+        });
+        return response.data.message;
+      } catch (error) {
+        return error.response.data.message;
       }
     },
   },
