@@ -2,6 +2,24 @@
 <template>
   <b-container>
     <b-row class="justify-content-md-center mt-4">
+      <b-col col md="6">
+        <img
+          src="../../assets/logo2.jpeg"
+          width="350rem"
+          class="img-fluid mb-3 d-none d-md-block"
+        />
+        <h1>Si no tiene una cuenta puede registrarse.</h1>
+        <p class="font-italic text-muted mb-0">
+          Se le enviará una contraseña a su correo electrónico
+        </p>
+
+        <b-form-group>
+          <router-link to="/SignUp" style="text-decoration: none;">
+            Desea registrarse?
+          </router-link>
+        </b-form-group>
+        <br />
+      </b-col>
       <b-col col md="4">
         <b-card header="INICIO DE SESIÓN" header-bg-variant="primary" header-text-variant="white">
           <b-card-text>
@@ -25,13 +43,6 @@
                     {{ btnname }}
                   </span>
                 </b-button>
-              </b-form-group>
-              <br />
-
-              <b-form-group>
-                <router-link to="/SignUp" style="text-decoration: none;">
-                  Desea registrarse?
-                </router-link>
               </b-form-group>
               <br />
 
@@ -69,12 +80,14 @@ export default {
       event.preventDefault();
       this.btnname = 'Iniciando...';
       this.loading = true;
+      console.log('d');
 
       try {
         const res = await this.axios.post('/auth/singin', {
           username: this.username,
           password: this.password,
         });
+        console.log(res);
 
         this.$store.dispatch('addToken', {
           token: res.data.body.token,
