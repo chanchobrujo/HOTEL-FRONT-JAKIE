@@ -3,12 +3,13 @@
 <template>
   <b-container>
     <b-row class="justify-content-md-center mt-4">
-      <b-col col md="3">
+      <b-col col md="4">
         <b-card
           header="Buscar habitaciones disponibles"
           header-bg-variant="primary"
           header-text-variant="white"
         >
+          <img src="../../assets/res.jpg" width="350rem" class="img-fluid mb-3 d-none d-md-block" />
           <b-card-text>
             <b-form @submit="onSubmit">
               <b-input-group class="mb-3">
@@ -56,7 +57,7 @@
           </b-card-text>
         </b-card>
       </b-col>
-      <b-col col md="9">
+      <b-col col md="8">
         <b-table
           sticky-header
           responsive
