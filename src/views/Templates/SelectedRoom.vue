@@ -87,8 +87,12 @@
               </b-form-group>
             </b-input-group>
 
+            <b-form-group description="Requerimientos especiales.">
+              <b-form-textarea v-model="requirements"> </b-form-textarea>
+            </b-form-group>
+
             <b-form-group description="Email del cliente.">
-              <b-form-input v-model="guestdata.email"> </b-form-input>
+              <b-form-input v-model="guestdata.email" type="email"> </b-form-input>
             </b-form-group>
           </b-card-text>
         </b-card>
@@ -124,7 +128,7 @@ export default {
         email: '',
         phone: '',
       },
-      requirements: 'No molestar xd.',
+      requirements: '',
       productSelect: {},
     };
   },
