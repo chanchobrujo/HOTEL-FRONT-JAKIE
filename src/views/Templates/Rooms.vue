@@ -14,19 +14,14 @@
             <b-form @submit="onSubmit">
               <!-- -->
               <b-input-group class="mb-3">
-                <b-form-input v-model="product.name" placeholder="Nombre" required type="text">
+                <b-form-input v-model="product.flat" placeholder="Piso" required type="number">
                 </b-form-input>
-                <b-form-input
-                  v-model="product.description"
-                  placeholder="Descripción"
-                  required
-                  type="text"
-                >
+                <b-form-input v-model="product.description" placeholder="Descripción" required type="text">
                 </b-form-input>
               </b-input-group>
               <!-- -->
               <b-input-group class="mb-3">
-                <b-form-input v-model="product.price" required type="number"> </b-form-input>
+                <b-form-input v-model="product.price" required type="text"> </b-form-input>
                 <b-form-select
                   v-model="product.type"
                   :options="$store.state.types"
@@ -120,12 +115,7 @@
             <b-button variant="outline-warning" size="sm" class="m-1" @click="update(row.item)">
               <b-icon icon="pencil-fill" aria-hidden="true"></b-icon>
             </b-button>
-            <b-button
-              variant="outline-danger"
-              size="sm"
-              class="m-1"
-              @click="deleteProduct(row.item.idroomm)"
-            >
+            <b-button variant="outline-danger" size="sm" class="m-1" @click="deleteProduct(row.item.idroomm)">
               <b-icon icon="trash" aria-hidden="true"></b-icon>
             </b-button>
             <b-button
@@ -169,11 +159,11 @@ export default {
   data() {
     return {
       imageprops: {width: '150%', class: 'm1'},
-      fields: ['name', 'description', 'idtype', 'price', 'state', 'photo', 'actions'],
+      fields: ['name', 'flat', 'description', 'idtype', 'price', 'state', 'photo', 'actions'],
       isBusy: true,
       product: {
         id: '',
-        name: '',
+        flat: '',
         description: '',
         price: 50,
         type: {},
@@ -204,7 +194,7 @@ export default {
     },
     clear() {
       this.product.id = '';
-      this.product.name = '';
+      this.product.flat = 1;
       this.product.description = '';
       this.product.price = 50;
       this.product.photo = '';
@@ -243,7 +233,7 @@ export default {
     },
     async update(item) {
       this.product.id = item.idroomm;
-      this.product.name = item.name;
+      this.product.flat = item.flat;
       this.product.description = item.description;
       this.product.price = item.price;
       this.product.type = item.idtype;

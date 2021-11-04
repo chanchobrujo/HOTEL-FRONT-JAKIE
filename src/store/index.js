@@ -112,7 +112,7 @@ export default new Vuex.Store({
       try {
         const res = await axios.post('/room/save', {
           idroom: product.id,
-          name: product.name,
+          flat: product.flat,
           description: product.description,
           price: product.price,
           idtype: product.type,
@@ -168,7 +168,7 @@ export default new Vuex.Store({
     async findByAvaliable({commit}, {from}) {
       try {
         const res = await axios.get(
-          '/reservation/findByAvaliable/' + from.date1 + '/' + from.date2 + '/' + from.idtype
+          '/reservation/findByAvaliable/' + from.date1 + '/' + from.date2 + '/' + from.idtype,
         );
         return res.data;
       } catch (error) {}
@@ -176,7 +176,7 @@ export default new Vuex.Store({
     async CalculateSelectedRoom({commit}, {from}) {
       try {
         const res = await axios.get(
-          '/reservation/CalculateSelectedRoom/' + from.idroom + '/' + from.date1 + '/' + from.date2
+          '/reservation/CalculateSelectedRoom/' + from.idroom + '/' + from.date1 + '/' + from.date2,
         );
         return res.data.body;
       } catch (error) {}
