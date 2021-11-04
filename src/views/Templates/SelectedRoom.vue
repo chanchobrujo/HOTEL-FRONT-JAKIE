@@ -4,11 +4,7 @@
   <b-container>
     <b-row class="justify-content-md-center mt-4">
       <b-col col md="5">
-        <b-card
-          header="Detalles de reserva"
-          header-bg-variant="primary"
-          header-text-variant="white"
-        >
+        <b-card header="Detalles de reserva" header-bg-variant="primary" header-text-variant="white">
           <b-card-text>
             <b-form @submit="onSubmit">
               <b-form-group class="mb-3">
@@ -62,11 +58,7 @@
         </b-card>
       </b-col>
       <b-col col md="5">
-        <b-card
-          header="Detalles de huesped"
-          header-bg-variant="primary"
-          header-text-variant="white"
-        >
+        <b-card header="Detalles de huesped" header-bg-variant="primary" header-text-variant="white">
           <b-card-text>
             <b-input-group class="mb-3">
               <b-form-group description="Dni del huesped.">
@@ -82,7 +74,7 @@
                 <b-form-input v-model="guestdata.lastname"> </b-form-input>
               </b-form-group>
 
-              <b-form-group description="Número del cliente.">
+              <b-form-group description="Teléfono del cliente.">
                 <b-form-input v-model="guestdata.phone"> </b-form-input>
               </b-form-group>
             </b-input-group>

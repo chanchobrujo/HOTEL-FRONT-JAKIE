@@ -111,7 +111,7 @@
             <b-img height="70" width="90" v-bind="imageprops" center :src="data.value"></b-img>
           </template>
 
-          <template #cell(actions)="row">
+          <template #cell(Seleccionar)="row">
             <b-button variant="outline-warning" size="sm" class="m-1" @click="update(row.item)">
               <b-icon icon="pencil-fill" aria-hidden="true"></b-icon>
             </b-button>
@@ -159,7 +159,7 @@ export default {
   data() {
     return {
       imageprops: {width: '150%', class: 'm1'},
-      fields: ['name', 'flat', 'description', 'idtype', 'price', 'state', 'photo', 'actions'],
+      fields: ['name', 'flat', 'description', 'idtype', 'price', 'state', 'photo', 'Seleccionar'],
       isBusy: true,
       product: {
         id: '',
