@@ -215,6 +215,7 @@ export default new Vuex.Store({
     async addUser({commit}, {user}) {
       try {
         const response = await axios.post('/user/save', {
+          dni: user.dni,
           firtsname: user.firtsname,
           lastname: user.lastname,
           number: user.number,

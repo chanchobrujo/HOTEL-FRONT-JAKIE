@@ -7,6 +7,9 @@
         <b-card header="REGISTRARSE" header-bg-variant="primary" header-text-variant="white">
           <b-card-text>
             <b-form @submit="onSubmit">
+              <b-form-group description="Ingrese su dni." label="Dni">
+                <b-form-input v-model="from.dni" required type="number"> </b-form-input>
+              </b-form-group>
               <b-form-group description="Ingrese su nombre." label="Nombre">
                 <b-form-input v-model="from.firtsname" required type="text"> </b-form-input>
               </b-form-group>
@@ -59,6 +62,7 @@ export default {
   data() {
     return {
       from: {
+        dni: '',
         firtsname: '',
         lastname: '',
         number: '',
@@ -84,6 +88,7 @@ export default {
         this.btn.loading = true;
 
         const res = await this.axios.post('/inscription/', {
+          dni: this.from.dni,
           firtsname: this.from.firtsname,
           lastname: this.from.lastname,
           number: this.from.number,

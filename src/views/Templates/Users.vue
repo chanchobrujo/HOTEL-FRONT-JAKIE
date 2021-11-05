@@ -14,6 +14,10 @@
             <b-form @submit="onSubmit">
               <!-- -->
               <b-input-group class="mb-3">
+                <b-form-input v-model="user.dni" placeholder="Dni" required> </b-form-input>
+              </b-input-group>
+              <!-- -->
+              <b-input-group class="mb-3">
                 <b-form-input v-model="user.firtsname" placeholder="Nombre" required>
                 </b-form-input>
                 <b-form-input v-model="user.lastname" placeholder="Apellido" required>
@@ -107,6 +111,7 @@ export default {
         message: '',
       },
       user: {
+        dni: '',
         firtsname: '',
         lastname: '',
         number: '',
@@ -117,7 +122,17 @@ export default {
       },
       table: {
         isBusy: true,
-        fields: ['firtsname', 'lastname', 'number', 'email', 'photo', 'photo', 'state', 'roles'],
+        fields: [
+          'dni',
+          'firtsname',
+          'lastname',
+          'number',
+          'email',
+          'photo',
+          'photo',
+          'state',
+          'roles',
+        ],
       },
       users: [],
     };
