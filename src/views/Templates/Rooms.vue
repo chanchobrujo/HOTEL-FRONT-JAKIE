@@ -206,7 +206,6 @@ export default {
       product: {
         id: '',
         flat: '',
-        description: '',
         price: 50,
         type: {},
         photo: '',

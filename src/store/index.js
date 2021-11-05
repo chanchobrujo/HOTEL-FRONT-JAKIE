@@ -113,7 +113,6 @@ export default new Vuex.Store({
         const res = await axios.post('/room/save', {
           idroom: product.id,
           flat: product.flat,
-          description: product.description,
           price: product.price,
           idtype: product.type,
           photo: product.photo,
