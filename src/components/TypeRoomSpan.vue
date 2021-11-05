@@ -4,7 +4,9 @@
     <span v-show="false">
       {{ getname(id) }}
     </span>
-    <b-button size="sm" pill variant="outline-primary">{{ name }}</b-button>
+    <b-button size="sm" pill variant="outline-primary">{{
+      name + ' - Huspedes: ' + numberGuest
+    }}</b-button>
   </div>
 </template>
 
@@ -13,6 +15,7 @@ export default {
   data() {
     return {
       name: '',
+      numberGuest: 0,
     };
   },
   props: {
@@ -25,6 +28,7 @@ export default {
         id: id,
       });
       this.name = type.name;
+      this.numberGuest = type.numberGuest;
     },
   },
 };
