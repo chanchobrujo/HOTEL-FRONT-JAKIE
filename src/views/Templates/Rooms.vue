@@ -113,13 +113,13 @@
               font-scale="2"
               variant="success"
             ></b-icon>
-            <b-icon v-else icon="check-circle-fill" font-scale="2" variant="danger"></b-icon>
+            <b-icon v-else icon="exclamation-circle-fill" font-scale="2" variant="danger"></b-icon>
           </template>
 
           <template #cell(state)="data">
             <b-icon
               v-if="data.value"
-              icon="exclamation-circle-fill"
+              icon="check-circle-fill"
               font-scale="2"
               variant="success"
             ></b-icon>
@@ -207,7 +207,7 @@ export default {
         id: '',
         flat: '',
         price: 50,
-        type: {},
+        type: '',
         photo: '',
         children: true,
       },
