@@ -123,7 +123,6 @@ export default {
       },
     };
   },
-  created() {},
   methods: {
     async onSubmit(event) {
       event.preventDefault();

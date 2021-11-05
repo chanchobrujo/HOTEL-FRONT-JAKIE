@@ -87,7 +87,6 @@ export default {
           username: this.username,
           password: this.password,
         });
-        console.log(res);
 
         this.$store.dispatch('addToken', {
           token: res.data.body.token,
