@@ -3,7 +3,7 @@
 <template>
   <b-container>
     <b-row class="justify-content-md-center mt-4">
-      <b-col col md="5">
+      <b-col col md="3">
         <b-card
           header="Mantenimiento de habitaciones"
           header-bg-variant="primary"
@@ -16,13 +16,12 @@
               <b-input-group class="mb-3">
                 <b-form-input v-model="product.flat" placeholder="Piso" required type="number">
                 </b-form-input>
-                <b-form-input v-model="product.description" placeholder="Descripción" required type="text">
-                </b-form-input>
+                <b-form-input v-model="product.price" required type="text"> </b-form-input>
               </b-input-group>
               <!-- -->
               <b-input-group class="mb-3">
-                <b-form-input v-model="product.price" required type="text"> </b-form-input>
                 <b-form-select
+                  id="select"
                   v-model="product.type"
                   :options="$store.state.types"
                   value-field="idtyperoom"
@@ -38,8 +37,18 @@
                 </b-form-select>
               </b-input-group>
               <!-- -->
+              <b-input-group class="mb-3">
+                <b-form-checkbox name="check-button" v-model="product.children" switch>
+                  Se permiten niños?
+                </b-form-checkbox>
+              </b-input-group>
+              <!-- -->
+
               <b-form-group class="mb-3">
-                <b-form-file v-model="file" accept="image/*"></b-form-file>
+                <label class="custom-file-upload">
+                  <b-form-file class="file" v-model="file" accept="image/*"></b-form-file>
+                </label>
+
                 <b-button @click="EncriptImagenAbase64()" variant="link">
                   Ver imagen
                 </b-button>
@@ -74,7 +83,7 @@
           </b-card-text>
         </b-card>
       </b-col>
-      <b-col col md="7">
+      <b-col col md="9">
         <!-- TABLA DE HABITACIONES -->
         <b-table
           sticky-header
@@ -97,6 +106,16 @@
             <TypeRoomSpan :id="data.value" />
           </template>
 
+          <template #cell(children)="data">
+            <b-icon
+              v-if="data.value"
+              icon="check-circle-fill"
+              font-scale="2"
+              variant="success"
+            ></b-icon>
+            <b-icon v-else icon="check-circle-fill" font-scale="2" variant="danger"></b-icon>
+          </template>
+
           <template #cell(state)="data">
             <b-icon
               v-if="data.value"
@@ -108,14 +127,19 @@
           </template>
 
           <template #cell(photo)="data">
-            <b-img height="70" width="90" v-bind="imageprops" center :src="data.value"></b-img>
+            <b-img height="90" width="120" v-bind="imageprops" center :src="data.value"></b-img>
           </template>
 
           <template #cell(Seleccionar)="row">
             <b-button variant="outline-warning" size="sm" class="m-1" @click="update(row.item)">
               <b-icon icon="pencil-fill" aria-hidden="true"></b-icon>
             </b-button>
-            <b-button variant="outline-danger" size="sm" class="m-1" @click="deleteProduct(row.item.idroomm)">
+            <b-button
+              variant="outline-danger"
+              size="sm"
+              class="m-1"
+              @click="deleteProduct(row.item.idroomm)"
+            >
               <b-icon icon="trash" aria-hidden="true"></b-icon>
             </b-button>
             <b-button
@@ -148,6 +172,24 @@
   </b-container>
 </template>
 
+<style>
+#select {
+  padding: 0.25rem;
+  border: 1px solid gray;
+}
+input[type='file'] {
+  display: none;
+}
+
+.custom-file-upload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+  width: 100%;
+}
+</style>
+
 <script>
 import TypeRoomSpan from '../../components/TypeRoomSpan.vue';
 import {getBase64} from '../../Global';
@@ -159,7 +201,7 @@ export default {
   data() {
     return {
       imageprops: {width: '150%', class: 'm1'},
-      fields: ['name', 'flat', 'description', 'idtype', 'price', 'state', 'photo', 'Seleccionar'],
+      fields: ['name', 'photo', 'flat', 'idtype', 'price', 'state', 'children', 'Seleccionar'],
       isBusy: true,
       product: {
         id: '',
@@ -168,6 +210,7 @@ export default {
         price: 50,
         type: {},
         photo: '',
+        children: true,
       },
       file: null,
 
@@ -198,6 +241,7 @@ export default {
       this.product.description = '';
       this.product.price = 50;
       this.product.photo = '';
+      this.product.children = true;
       this.file = null;
     },
     async deleteProduct(id) {
@@ -238,6 +282,7 @@ export default {
       this.product.price = item.price;
       this.product.type = item.idtype;
       this.product.photo = item.photo;
+      this.product.children = item.children;
     },
     async EncriptImagenAbase64() {
       try {
