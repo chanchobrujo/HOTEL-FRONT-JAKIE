@@ -264,6 +264,14 @@ export default new Vuex.Store({
         return error.response.data.message;
       }
     },
+    async SeeEarningsByDate({commit}, {date1, date2}) {
+      try {
+        const response = await axios.get('/report/SeeEarningsByDate/' + date1 + '/' + date2);
+        return response.data.body;
+      } catch (error) {
+        return error.response.data.message;
+      }
+    },
   },
   modules: {},
   plugins: [

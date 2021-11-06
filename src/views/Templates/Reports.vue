@@ -74,22 +74,37 @@
       </b-col>
       <b-col col md="3">
         <v-card class="mt-4 mx-auto">
-          <b-input-group class="mb-3">
-            <b-form-datepicker
-              v-model="fromSEBD.date1"
-              placeholder="Fecha inicial"
-              class="mb-2"
-              required
-            ></b-form-datepicker>
-          </b-input-group>
-          <b-input-group class="mb-3">
-            <b-form-datepicker
-              v-model="fromSEBD.date2"
-              placeholder="Fecha final"
-              class="mb-2"
-              required
-            ></b-form-datepicker>
-          </b-input-group>
+          <b-card header="Ganancias por fecha" header-border-variant="secondary" align="center">
+            <b-input-group class="mb-3">
+              <b-form-datepicker
+                v-model="fromSEBD.date1"
+                placeholder="Fecha inicial"
+                class="mb-2"
+                required
+              ></b-form-datepicker>
+            </b-input-group>
+            <b-input-group class="mb-3">
+              <b-form-datepicker
+                v-model="fromSEBD.date2"
+                placeholder="Fecha final"
+                class="mb-2"
+                required
+              ></b-form-datepicker>
+            </b-input-group>
+            <hr />
+            Ganacia: {{ amount }}
+            <b-form-group>
+              <b-button @click="filterDates()">
+                <span v-if="button.loading">
+                  <b-spinner small type="grow"></b-spinner>
+                </span>
+
+                <span class="sr-only">
+                  {{ button.name }}
+                </span>
+              </b-button>
+            </b-form-group>
+          </b-card>
         </v-card>
       </b-col>
     </b-row>
@@ -111,6 +126,13 @@ export default {
         date1: '',
         date2: '',
       },
+
+      amount: 0,
+
+      button: {
+        loading: false,
+        name: 'Buscar',
+      },
     };
   },
   async created() {
@@ -124,6 +146,15 @@ export default {
     this.fromUWMR.UWMR = await this.$store.dispatch('findById', {
       id: res.iduser,
     });
+  },
+
+  methods: {
+    async filterDates() {
+      this.amount = await this.$store.dispatch('SeeEarningsByDate', {
+        date1: this.fromSEBD.date1,
+        date2: this.fromSEBD.date2,
+      });
+    },
   },
 };
 </script>
