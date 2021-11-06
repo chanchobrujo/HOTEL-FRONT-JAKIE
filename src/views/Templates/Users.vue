@@ -75,14 +75,6 @@
             </div>
           </template>
 
-          <template #cell(photo)="row">
-            <b-avatar
-              v-if="row.item.photo == 'Sin foto.'"
-              :text="noImage(row.item.firtsname, row.item.lastname)"
-            ></b-avatar>
-            <b-avatar v-else :src="data.value"></b-avatar>
-          </template>
-
           <template #cell(state)="data">
             <b-icon
               v-if="data.value"
@@ -122,17 +114,7 @@ export default {
       },
       table: {
         isBusy: true,
-        fields: [
-          'dni',
-          'firtsname',
-          'lastname',
-          'number',
-          'email',
-          'photo',
-          'photo',
-          'state',
-          'roles',
-        ],
+        fields: ['dni', 'firtsname', 'lastname', 'number', 'email', 'state', 'roles'],
       },
       users: [],
     };

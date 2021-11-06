@@ -28,22 +28,17 @@
                   required
                 ></b-form-datepicker>
               </b-input-group>
+
               <b-input-group class="mb-3">
-                <b-form-select
-                  v-model="from.idtype"
-                  :options="$store.state.types"
-                  value-field="idtyperoom"
-                  text-field="name"
-                  disabled-field="!state"
-                  required
-                >
-                  <template #first>
-                    <b-form-select-option value="" disabled>
-                      -- Please select an option --
-                    </b-form-select-option>
-                  </template>
-                </b-form-select>
+                <b-form-input v-model="from.nguest" placeholder="Número de huespedes" required>
+                </b-form-input>
+                <b-form-checkbox class="mx-4" name="check-button" v-model="from.ischildren">
+                  Se permiten niños?
+                </b-form-checkbox>
               </b-input-group>
+
+              <b-input-group class="mb-3"> </b-input-group>
+
               <hr />
               <b-form-group>
                 <b-button type="submit" class="mx-2" variant="outline-primary">
@@ -115,7 +110,8 @@ export default {
       from: {
         date1: '',
         date2: '',
-        idtype: '',
+        nguest: '',
+        ischildren: true,
       },
       rooms: [],
       btn: {

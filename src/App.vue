@@ -9,7 +9,6 @@
     </transition>
   </div>
 </template>
-
 <script>
 //Jpicoyrosas@gmail.com
 import Nav from './components/Nav.vue';

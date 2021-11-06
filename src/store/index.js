@@ -168,7 +168,14 @@ export default new Vuex.Store({
     async findByAvaliable({commit}, {from}) {
       try {
         const res = await axios.get(
-          '/reservation/findByAvaliable/' + from.date1 + '/' + from.date2 + '/' + from.idtype
+          '/reservation/findByAvaliable/' +
+            from.date1 +
+            '/' +
+            from.date2 +
+            '/' +
+            from.nguest +
+            '/' +
+            from.ischildren
         );
         return res.data;
       } catch (error) {}
