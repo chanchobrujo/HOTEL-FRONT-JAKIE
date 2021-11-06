@@ -53,7 +53,13 @@
         </b-card>
       </b-col>
       <b-col col md="8">
+        <span v-if="rooms.length == 0">
+          <strong>
+            No hay disponibilidad de habitaciones para la fecha ingresada
+          </strong>
+        </span>
         <b-table
+          v-if="rooms.length > 0"
           sticky-header
           responsive
           hover
