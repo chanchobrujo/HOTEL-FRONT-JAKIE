@@ -74,7 +74,6 @@ export default {
       message: '',
     };
   },
-  created() {},
   methods: {
     async onSubmit(event) {
       event.preventDefault();

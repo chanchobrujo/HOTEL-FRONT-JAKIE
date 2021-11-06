@@ -12,7 +12,7 @@
           <b-card-text>
             <b-form @submit="onSubmit">
               <b-form-group class="mb-3">
-                <b-img width="120" center :src="productSelect.photo"></b-img>
+                <b-img width="250" center :src="productSelect.photo"></b-img>
               </b-form-group>
               <b-input-group class="mb-3">
                 <b-form-group description="Feacha de incio.">
@@ -48,7 +48,15 @@
                   <b-form-input v-model="data.total" disabled> </b-form-input>
                 </b-form-group>
                 <b-form-group>
-                  <b-button @click="confirm()">confirmar</b-button>
+                  <b-button @click="confirm()">
+                    <span v-if="button.loading">
+                      <b-spinner small type="grow"></b-spinner>
+                    </span>
+
+                    <span class="sr-only">
+                      {{ button.name }}
+                    </span>
+                  </b-button>
                 </b-form-group>
               </b-input-group>
               <hr />
@@ -75,7 +83,6 @@
               <b-form-group description="Dni del huesped.">
                 <b-form-input v-model="guestdata.dni" :disabled="disable"> </b-form-input>
               </b-form-group>
-
               <b-form-group description="Nombre del cliente.">
                 <b-form-input v-model="guestdata.firtsname" :disabled="disable"> </b-form-input>
               </b-form-group>
@@ -133,21 +140,28 @@ export default {
         phone: '',
       },
       namebtn: 'Es para mi?',
-      disable: true,
+      disable: false,
       me: false,
       requirements: '',
       productSelect: {},
+
+      button: {
+        loading: false,
+        name: 'Confirmar',
+      },
     };
   },
   async mounted() {
-    this.guestdata.dni = this.$store.state.userdto.dni;
-    this.guestdata.firtsname = this.$store.state.userdto.firtsname;
-    this.guestdata.lastname = this.$store.state.userdto.lastname;
-    this.guestdata.email = this.$store.state.userdto.email;
-    this.guestdata.phone = this.$store.state.userdto.number;
+    if (this.$store.state.isHuesp) {
+      this.guestdata.dni = this.$store.state.userdto.dni;
+      this.guestdata.firtsname = this.$store.state.userdto.firtsname;
+      this.guestdata.lastname = this.$store.state.userdto.lastname;
+      this.guestdata.email = this.$store.state.userdto.email;
+      this.guestdata.phone = this.$store.state.userdto.number;
 
-    this.namebtn = 'Es para alguien más?';
-    this.disable = true;
+      this.namebtn = 'Es para alguien más?';
+      this.disable = true;
+    }
 
     this.data = await this.$store.dispatch('CalculateSelectedRoom', {
       from: this.from,
@@ -180,7 +194,7 @@ export default {
       this.me = !this.me;
     },
     async confirm() {
-      this.alert.show = true;
+      this.button.loading = true;
 
       const obj = await this.$store.dispatch('saveReservation', {
         guest: this.guestdata,
@@ -191,9 +205,11 @@ export default {
         data: this.data,
         requirements: this.requirements,
       });
-      console.log(obj);
+
+      this.button.loading = false;
 
       this.alert.message = obj.message;
+      this.alert.show = true;
 
       setTimeout(() => {
         if (obj.body != null) this.$router.replace({name: 'Reservations'});

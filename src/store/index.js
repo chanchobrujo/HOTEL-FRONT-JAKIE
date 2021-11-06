@@ -205,6 +205,12 @@ export default new Vuex.Store({
       }
     },
 
+    async findById({commit}, {id}) {
+      try {
+        const response = await axios.get('/user/findById/' + id);
+        return response.data;
+      } catch (error) {}
+    },
     async getUsers({commit}) {
       try {
         const response = await axios.get('/user/findAll');
@@ -250,6 +256,14 @@ export default new Vuex.Store({
         return error.response.data.message;
       }
     },
+    async UserWithMoreReservations({commit}) {
+      try {
+        const response = await axios.get('/report/UserWithMoreReservations/ROLE_RECP');
+        return response.data.body;
+      } catch (error) {
+        return error.response.data.message;
+      }
+    },
   },
   modules: {},
   plugins: [
@@ -258,7 +272,3 @@ export default new Vuex.Store({
     }).plugin,
   ],
 });
-
-//reservation
-//CalculateSelectedRoom/{idroom}/{date1}/{date2}
-//save
