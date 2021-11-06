@@ -68,22 +68,25 @@
           header-text-variant="white"
         >
           <b-card-text>
+            <span v-if="$store.state.isHuesp">
+              <b-button @click="checked" class="my-4"> {{ namebtn }} </b-button>
+            </span>
             <b-input-group class="mb-3">
               <b-form-group description="Dni del huesped.">
-                <b-form-input v-model="guestdata.dni" :disabled="isclient"> </b-form-input>
+                <b-form-input v-model="guestdata.dni" :disabled="disable"> </b-form-input>
               </b-form-group>
 
               <b-form-group description="Nombre del cliente.">
-                <b-form-input v-model="guestdata.firtsname" :disabled="isclient"> </b-form-input>
+                <b-form-input v-model="guestdata.firtsname" :disabled="disable"> </b-form-input>
               </b-form-group>
             </b-input-group>
             <b-input-group class="mb-3">
               <b-form-group description="Apellido del huesped.">
-                <b-form-input v-model="guestdata.lastname" :disabled="isclient"> </b-form-input>
+                <b-form-input v-model="guestdata.lastname" :disabled="disable"> </b-form-input>
               </b-form-group>
 
               <b-form-group description="Teléfono del cliente.">
-                <b-form-input v-model="guestdata.phone" :disabled="isclient"> </b-form-input>
+                <b-form-input v-model="guestdata.phone" :disabled="disable"> </b-form-input>
               </b-form-group>
             </b-input-group>
 
@@ -92,7 +95,7 @@
             </b-form-group>
 
             <b-form-group description="Email del cliente.">
-              <b-form-input v-model="guestdata.email" type="email" :disabled="isclient">
+              <b-form-input v-model="guestdata.email" type="email" :disabled="disable">
               </b-form-input>
             </b-form-group>
           </b-card-text>
@@ -129,20 +132,23 @@ export default {
         email: '',
         phone: '',
       },
-      isclient: false,
+      namebtn: 'Es para mi?',
+      disable: true,
+      me: false,
       requirements: '',
       productSelect: {},
     };
   },
-  async created() {
-    if (this.$store.state.isHuesp) {
-      this.guestdata.dni = this.$store.state.userdto.dni;
-      this.guestdata.firtsname = this.$store.state.userdto.firtsname;
-      this.guestdata.lastname = this.$store.state.userdto.lastname;
-      this.guestdata.email = this.$store.state.userdto.email;
-      this.guestdata.phone = this.$store.state.userdto.number;
-      this.isclient = true;
-    }
+  async mounted() {
+    this.guestdata.dni = this.$store.state.userdto.dni;
+    this.guestdata.firtsname = this.$store.state.userdto.firtsname;
+    this.guestdata.lastname = this.$store.state.userdto.lastname;
+    this.guestdata.email = this.$store.state.userdto.email;
+    this.guestdata.phone = this.$store.state.userdto.number;
+
+    this.namebtn = 'Es para alguien más?';
+    this.disable = true;
+
     this.data = await this.$store.dispatch('CalculateSelectedRoom', {
       from: this.from,
     });
@@ -151,6 +157,28 @@ export default {
     });
   },
   methods: {
+    checked() {
+      if (this.me) {
+        this.guestdata.dni = this.$store.state.userdto.dni;
+        this.guestdata.firtsname = this.$store.state.userdto.firtsname;
+        this.guestdata.lastname = this.$store.state.userdto.lastname;
+        this.guestdata.email = this.$store.state.userdto.email;
+        this.guestdata.phone = this.$store.state.userdto.number;
+
+        this.namebtn = 'Es para alguien más?';
+        this.disable = true;
+      } else {
+        this.guestdata.dni = '';
+        this.guestdata.firtsname = '';
+        this.guestdata.lastname = '';
+        this.guestdata.email = '';
+        this.guestdata.phone = '';
+
+        this.namebtn = 'Es para mi?';
+        this.disable = false;
+      }
+      this.me = !this.me;
+    },
     async confirm() {
       this.alert.show = true;
 
@@ -173,7 +201,5 @@ export default {
     },
     async onSubmit(event) {},
   },
-  /**
-   */
 };
 </script>
