@@ -86,7 +86,7 @@
       <b-col col md="9">
         <!-- TABLA DE HABITACIONES -->
         <b-table
-          sticky-header
+          sticky-header="80%"
           responsive
           hover
           :busy="isBusy"
