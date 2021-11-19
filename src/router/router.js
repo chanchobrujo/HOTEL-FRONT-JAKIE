@@ -13,6 +13,8 @@ import Reports from '../views/Templates/Reports.vue';
 import Rooms from '../views/Templates/Rooms.vue';
 import Users from '../views/Templates/Users.vue';
 
+import RervationsChangeState from '../views/Templates/ReservationChangeState.vue';
+
 import store from '../store/index.js';
 
 Vue.use(VueRouter);
@@ -23,7 +25,7 @@ const routes = [
     name: 'SignIn',
     component: SignIn,
     beforeEnter: (to, from, next) => {
-      if (store.state.expired == true) next();
+      if (store.state.expired) next();
       else next('/Reservations');
     },
   },
@@ -78,6 +80,16 @@ const routes = [
     path: '/Reports',
     name: 'Reports',
     component: Reports,
+    beforeEnter: (to, from, next) => {
+      if (store.state.isAdmin && !store.state.expired) next();
+      if (!store.state.isAdmin) next('/Reservations');
+      if (store.state.expired == true) next('/');
+    },
+  },
+  {
+    path: '/RervationsChangeState',
+    name: 'RervationsChangeState',
+    component: RervationsChangeState,
     beforeEnter: (to, from, next) => {
       if (store.state.isAdmin && !store.state.expired) next();
       if (!store.state.isAdmin) next('/Reservations');

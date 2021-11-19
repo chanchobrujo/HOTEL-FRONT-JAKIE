@@ -87,11 +87,11 @@
             <b-button
               @click="update(row.item.idroomm)"
               block
-              variant="outline-warning"
+              variant="outline-success"
               size="sm"
               class="m-1"
             >
-              <b-icon icon="bell-fill" aria-hidden="true"></b-icon>
+              <b-icon icon="house-fill" aria-hidden="true"></b-icon>
             </b-button>
           </template>
           <template #table-caption>Habitaciones.</template>
