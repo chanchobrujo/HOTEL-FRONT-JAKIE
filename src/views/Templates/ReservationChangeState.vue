@@ -56,8 +56,8 @@
             <b-col col md="3">
               <RoomCard :id="row.item.habitacion" />
             </b-col>
-            <b-col col md="3">
-              <RoomCard :id="row.item.habitacion" />
+            <b-col col md="2">
+              <GuestCard :dni="row.item.huesped" />
             </b-col>
             <b-col col md="3">
               <RoomCard :id="row.item.habitacion" />
@@ -83,10 +83,12 @@
 <script>
 import {dateFormat} from '../../Global';
 import RoomCard from '../../components/Cards/RoomCard.vue';
+import GuestCard from '../../components/Cards/GuestCard.vue';
 
 export default {
   components: {
     RoomCard,
+    GuestCard,
   },
   data() {
     return {

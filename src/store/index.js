@@ -294,6 +294,14 @@ export default new Vuex.Store({
         return error.response.data.message;
       }
     },
+
+    async findByGuestDni({commit}, {dni}) {
+      try {
+        const response = await axios.get('/guest/findByDni/' + dni);
+        console.log(response);
+        return response.data;
+      } catch (error) {}
+    },
   },
   modules: {},
   plugins: [
