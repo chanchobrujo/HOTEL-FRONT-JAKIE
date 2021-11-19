@@ -191,7 +191,7 @@ input[type='file'] {
 </style>
 
 <script>
-import TypeRoomSpan from '../../components/TypeRoomSpan.vue';
+import TypeRoomSpan from '../../components/Span/TypeRoomSpan.vue';
 import {getBase64} from '../../Global';
 
 export default {

@@ -104,8 +104,7 @@ export default new Vuex.Store({
     async getProductsById({commit}, {id}) {
       try {
         const response = await axios.get('/room/findById/' + id);
-        const array = response.data;
-        return array;
+        return response.data;
       } catch (error) {}
     },
     async addProduct({commit}, {product}) {

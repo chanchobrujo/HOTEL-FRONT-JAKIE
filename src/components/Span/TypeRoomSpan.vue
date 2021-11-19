@@ -21,7 +21,6 @@ export default {
   props: {
     id: String,
   },
-  mounted() {},
   methods: {
     async getname(id) {
       const type = await this.$store.dispatch('getType', {

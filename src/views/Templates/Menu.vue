@@ -102,7 +102,7 @@
 </template>
 
 <script>
-import TypeRoomSpan from '../../components/TypeRoomSpan.vue';
+import TypeRoomSpan from '../../components/Span/TypeRoomSpan.vue';
 export default {
   components: {
     TypeRoomSpan,

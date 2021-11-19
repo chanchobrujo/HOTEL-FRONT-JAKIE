@@ -52,22 +52,17 @@
         </template>
 
         <template #row-details="row">
-          <b-card>
-            <b-row class="mb-2">
-              <b-col sm="3" class="text-sm-right"><b>Usuario:</b></b-col>
-              <b-col>{{ row.item.usuario }}</b-col>
-            </b-row>
-
-            <b-row class="mb-2">
-              <b-col sm="3" class="text-sm-right"><b>Huesped:</b></b-col>
-              <b-col>{{ row.item.huesped }}</b-col>
-            </b-row>
-
-            <b-row class="mb-2">
-              <b-col sm="3" class="text-sm-right"><b>Habitacion:</b></b-col>
-              <b-col>{{ row.item.habitacion }}</b-col>
-            </b-row>
-          </b-card>
+          <b-row class="justify-content-md-center mt-4">
+            <b-col col md="3">
+              <RoomCard :id="row.item.habitacion" />
+            </b-col>
+            <b-col col md="3">
+              <RoomCard :id="row.item.habitacion" />
+            </b-col>
+            <b-col col md="3">
+              <RoomCard :id="row.item.habitacion" />
+            </b-col>
+          </b-row>
         </template>
 
         <template #cell(estado)="data">
@@ -87,8 +82,12 @@
 
 <script>
 import {dateFormat} from '../../Global';
+import RoomCard from '../../components/Cards/RoomCard.vue';
 
 export default {
+  components: {
+    RoomCard,
+  },
   data() {
     return {
       table: {
