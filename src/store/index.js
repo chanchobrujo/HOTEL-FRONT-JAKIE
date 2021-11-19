@@ -214,7 +214,7 @@ export default new Vuex.Store({
     async ChangeStateReservation({commit}, {id}) {
       try {
         const res = await axios.put('/reservation/ChangeStateReservation/' + id);
-        return res;
+        return res.data.message;
       } catch (error) {
         return error.response.data;
       }

@@ -20,9 +20,59 @@
           </div>
         </template>
 
+        <template #cell(Ver_detalle)="row">
+          <b-button variant="warning" size="sm" @click="row.toggleDetails" class="m-1">
+            <strong style="color:white;">
+              {{ row.detailsShowing ? 'Ocultar' : 'Mostrar' }} Detalle
+            </strong>
+          </b-button>
+
+          <b-button
+            v-if="row.item.estado"
+            variant="outline-dark"
+            size="sm"
+            class="m-1"
+            v-b-tooltip.hover
+            title="Dar de baja"
+            @click="ChangeStateReservation(row.item.id)"
+          >
+            <b-icon icon="arrow-down" aria-hidden="true"></b-icon>
+          </b-button>
+          <b-button
+            v-else
+            variant="outline-success"
+            size="sm"
+            class="m-1"
+            v-b-tooltip.hover
+            title="Dar de alta"
+            @click="ChangeStateReservation(row.item.id)"
+          >
+            <b-icon icon="arrow-up" aria-hidden="true"></b-icon>
+          </b-button>
+        </template>
+
+        <template #row-details="row">
+          <b-card>
+            <b-row class="mb-2">
+              <b-col sm="3" class="text-sm-right"><b>Usuario:</b></b-col>
+              <b-col>{{ row.item.usuario }}</b-col>
+            </b-row>
+
+            <b-row class="mb-2">
+              <b-col sm="3" class="text-sm-right"><b>Huesped:</b></b-col>
+              <b-col>{{ row.item.huesped }}</b-col>
+            </b-row>
+
+            <b-row class="mb-2">
+              <b-col sm="3" class="text-sm-right"><b>Habitacion:</b></b-col>
+              <b-col>{{ row.item.habitacion }}</b-col>
+            </b-row>
+          </b-card>
+        </template>
+
         <template #cell(estado)="data">
           <b-icon
-            v-if="data.value"
+            v-if="data.item.estado"
             icon="check-circle-fill"
             font-scale="2"
             variant="success"
@@ -31,6 +81,7 @@
         </template>
       </b-table>
     </b-col>
+    {{ message }}
   </b-container>
 </template>
 
@@ -50,19 +101,34 @@ export default {
           'requerimientos',
           'total',
           'estado',
+          'Ver_detalle',
         ],
       },
       reservations: [],
+      message: '',
     };
   },
   created() {
     this.getReservations();
   },
   methods: {
-    async getReservations() {
+    _setTimeout(time) {
       setTimeout(() => {
         this.table.charge = false;
-      }, 2000);
+      }, time);
+    },
+    async ChangeStateReservation(id) {
+      this.table.charge = true;
+      this.message = '';
+
+      this.message = await this.$store.dispatch('ChangeStateReservation', {
+        id: id,
+      });
+
+      this.getReservations();
+      this._setTimeout(1500);
+    },
+    async getReservations() {
       const array = await this.$store.dispatch('findAllReservation');
 
       this.reservations = array.map(function(val) {
@@ -77,9 +143,10 @@ export default {
 
           huesped: val.dniguest,
           usuario: val.iduser,
-          habitación: val.idroom,
+          habitacion: val.idroom,
         };
       });
+      this._setTimeout(1500);
     },
   },
 };

@@ -27,7 +27,7 @@ export function routesByRole() {
     link: '/Users',
   };
   const objRes = {
-    name: 'Cambiar el estado de una habitación',
+    name: 'Cambiar el estado de una reservación',
     link: '/RervationsChangeState',
   };
 
