@@ -6,9 +6,6 @@
     <h4 id="sidebar-no-header-title" class="mt-4">
       {{ $store.state.userdto.firtsname + ' ' + $store.state.userdto.lastname }}
     </h4>
-    <h5 id="sidebar-no-header-title" class="mt-4">
-      {{ $store.state.userdto.dni }}
-    </h5>
     <p>
       {{ $store.state.userdto.email }}
     </p>

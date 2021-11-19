@@ -26,18 +26,23 @@ export function routesByRole() {
     name: 'Mantenimiento de usuarios',
     link: '/Users',
   };
+  const objRes = {
+    name: 'Cambiar el estado de una habitación',
+    link: '/RervationsChangeState',
+  };
 
   if (store.state.isAdmin == true) {
-    routes.push(objRoom, objUser, reports);
+    routes.push(objRes, objRoom, objUser, reports);
   }
   if (store.state.isRecep == true) {
     routes.push(objRoom);
   }
-  if (store.state.isHuesp == true) {
-    routes.push();
-  }
 
   return routes;
+}
+
+export function dateFormat(date) {
+  return date.toString().substr(0, 10);
 }
 
 export function findAuth(rolename, array) {
