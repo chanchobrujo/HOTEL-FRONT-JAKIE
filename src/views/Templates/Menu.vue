@@ -18,6 +18,7 @@
                   placeholder="Fecha de inicio"
                   class="mb-2"
                   required
+                  :min="min"
                 ></b-form-datepicker>
               </b-input-group>
               <b-input-group class="mb-3">
@@ -26,6 +27,7 @@
                   placeholder="Fecha de fin"
                   class="mb-2"
                   required
+                  :min="min"
                 ></b-form-datepicker>
               </b-input-group>
 
@@ -108,14 +110,27 @@ export default {
     TypeRoomSpan,
   },
   data() {
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    // 15th two months prior
+    const minDate = new Date(today);
+    minDate.setMonth(minDate.getMonth() - 2);
+    minDate.setDate(15);
+    // 15th in two months
+    const maxDate = new Date(today);
+    maxDate.setMonth(maxDate.getMonth() + 2);
+    maxDate.setDate(15);
+
+    console.log(minDate);
+    console.log(maxDate);
     return {
       tablepro: {
         isBusy: false,
       },
       fields: ['name', 'idtype', 'price', 'photo', 'actions'],
       from: {
-        date1: '',
-        date2: '',
+        date1: new Date(),
+        date2: new Date(),
         nguest: '',
         ischildren: true,
       },
@@ -123,8 +138,10 @@ export default {
       btn: {
         loading: false,
       },
+      min: new Date(),
     };
   },
+  created() {},
   methods: {
     async onSubmit(event) {
       event.preventDefault();

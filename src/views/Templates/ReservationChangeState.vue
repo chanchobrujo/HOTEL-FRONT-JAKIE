@@ -59,9 +59,6 @@
             <b-col col md="2">
               <GuestCard :dni="row.item.huesped" />
             </b-col>
-            <b-col col md="3">
-              <RoomCard :id="row.item.habitacion" />
-            </b-col>
           </b-row>
         </template>
 
