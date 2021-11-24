@@ -52,6 +52,10 @@ export function findAuth(rolename, array) {
   return true;
 }
 
+export function moneyAsing(amount) {
+  return 's/ ' + amount.toFixed(2);
+}
+
 export function noImage() {
   return store.state.firtsname.charAt(0) + store.state.lastname.charAt(0);
 }

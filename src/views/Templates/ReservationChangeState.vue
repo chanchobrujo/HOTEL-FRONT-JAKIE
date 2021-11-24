@@ -23,7 +23,7 @@
         <template #cell(Ver_detalle)="row">
           <b-button variant="warning" size="sm" @click="row.toggleDetails" class="m-1">
             <strong style="color:white;">
-              {{ row.detailsShowing ? 'Ocultar' : 'Mostrar' }} Detalle
+              {{ row.detailsShowing ? 'Ocultar' : 'Mostrar' }} detalle
             </strong>
           </b-button>
 
@@ -78,7 +78,7 @@
 </template>
 
 <script>
-import {dateFormat} from '../../Global';
+import {dateFormat, moneyAsing} from '../../Global';
 import RoomCard from '../../components/Cards/RoomCard.vue';
 import GuestCard from '../../components/Cards/GuestCard.vue';
 
@@ -89,6 +89,7 @@ export default {
   },
   data() {
     return {
+      spinner: true,
       table: {
         charge: true,
         fields: [
@@ -136,7 +137,7 @@ export default {
           fechaInicio: dateFormat(val.date_ini),
           fechaFin: dateFormat(val.date_end),
           requerimientos: val.requirements,
-          total: val.total.toFixed(2),
+          total: moneyAsing(val.total),
           estado: val.state,
 
           huesped: val.dniguest,

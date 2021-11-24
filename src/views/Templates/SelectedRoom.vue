@@ -19,12 +19,12 @@
                   <b-form-input v-model="data.date1" disabled> </b-form-input>
                 </b-form-group>
 
-                <b-form-group description="Noches.">
+                <b-form-group description="Cantidad de noches.">
                   <b-form-input v-model="data.days" disabled> </b-form-input>
                 </b-form-group>
               </b-input-group>
               <b-input-group class="mb-3">
-                <b-form-group description="Habitación.">
+                <b-form-group description="Número de habitación.">
                   <b-form-input v-model="productSelect.name" disabled> </b-form-input>
                 </b-form-group>
 
@@ -113,6 +113,7 @@
 </template>
 
 <script>
+import {moneyAsing} from '../../Global';
 export default {
   data() {
     return {
@@ -143,7 +144,11 @@ export default {
       disable: false,
       me: false,
       requirements: '',
-      productSelect: {},
+      productSelect: {
+        photo: '',
+        name: '',
+        price: '',
+      },
 
       button: {
         loading: false,
@@ -169,6 +174,10 @@ export default {
     this.productSelect = await this.$store.dispatch('getProductsById', {
       id: this.from.idroom,
     });
+    this.data.subtotal = moneyAsing(this.data.subtotal);
+    this.data.tax = moneyAsing(this.data.tax);
+    this.data.total = moneyAsing(this.data.total);
+    this.productSelect.price = moneyAsing(this.productSelect.price);
   },
   methods: {
     checked() {
