@@ -3,6 +3,7 @@
 <template>
   <b-container>
     <b-row class="justify-content-md-center mt-4">
+      <PanelLogo />
       <b-col col md="3">
         <b-card
           header="Mantenimiento de habitaciones"
@@ -83,7 +84,7 @@
           </b-card-text>
         </b-card>
       </b-col>
-      <b-col col md="9">
+      <b-col col md="7">
         <!-- TABLA DE HABITACIONES -->
         <b-table
           sticky-header="80%"
@@ -192,11 +193,13 @@ input[type='file'] {
 
 <script>
 import TypeRoomSpan from '../../components/Span/TypeRoomSpan.vue';
+import PanelLogo from '../../components/PanelLogo.vue';
 import {getBase64} from '../../Global';
 
 export default {
   components: {
     TypeRoomSpan,
+    PanelLogo,
   },
   data() {
     return {

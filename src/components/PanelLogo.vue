@@ -1,7 +1,5 @@
 <!-- @format -->
 
 <template>
-  <div>
-    <img src="../assets/logo.jpg" alt="" srcset="" />
-  </div>
+  <b-col col md="2"><img src="../assets/logo.jpg" alt="" srcset=""/></b-col>
 </template>

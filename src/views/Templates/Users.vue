@@ -3,7 +3,8 @@
 <template>
   <b-container>
     <b-row class="justify-content-md-center mt-4">
-      <b-col col md="4">
+      <PanelLogo />
+      <b-col col md="3">
         <b-card
           header="Mantenimiento de usuarios"
           header-bg-variant="primary"
@@ -57,7 +58,7 @@
           </b-card-text>
         </b-card>
       </b-col>
-      <b-col col md="8">
+      <b-col col md="7">
         <!-- TABLA DE HABITACIONES -->
         <b-table
           sticky-header
@@ -95,7 +96,11 @@
 </template>
 
 <script>
+import PanelLogo from '../../components/PanelLogo.vue';
 export default {
+  components: {
+    PanelLogo,
+  },
   data() {
     return {
       alert: {

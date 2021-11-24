@@ -3,6 +3,7 @@
 <template>
   <b-container>
     <b-row class="justify-content-md-center mt-4">
+      <PanelLogo />
       <b-col col md="5">
         <b-card
           header="Detalles de reserva"
@@ -69,7 +70,7 @@
           </b-card-text>
         </b-card>
       </b-col>
-      <b-col col md="5">
+      <b-col col md="4">
         <b-card
           header="Detalles de huesped"
           header-bg-variant="primary"
@@ -114,7 +115,11 @@
 
 <script>
 import {moneyAsing} from '../../Global';
+import PanelLogo from '../../components/PanelLogo.vue';
 export default {
+  components: {
+    PanelLogo,
+  },
   data() {
     return {
       alert: {
