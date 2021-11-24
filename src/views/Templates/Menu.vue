@@ -55,7 +55,7 @@
         </b-card>
       </b-col>
       <b-col col md="8">
-        <span v-if="rooms.length == 0">
+        <span v-if="rooms == null">
           <strong>
             No hay disponibilidad de habitaciones para la fecha ingresada
           </strong>

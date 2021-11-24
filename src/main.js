@@ -12,7 +12,7 @@ import VueAxios from 'vue-axios';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
-import vuetify from './plugins/vuetify'
+import vuetify from './plugins/vuetify';
 
 // Make BootstrapVue available throughout your project
 Vue.use(BootstrapVue);
@@ -42,5 +42,5 @@ new Vue({
   router,
   store,
   vuetify,
-  render: (h) => h(App)
+  render: (h) => h(App),
 }).$mount('#app');
