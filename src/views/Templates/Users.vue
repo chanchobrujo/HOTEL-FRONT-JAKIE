@@ -76,6 +76,33 @@
             </div>
           </template>
 
+          <template #cell(Seleccionar)="row">
+            <b-button
+              v-if="row.item.state"
+              variant="outline-dark"
+              size="sm"
+              class="m-1"
+              v-b-tooltip.hover
+              title="Dar de baja"
+              @click="update(row.item.idroomm)"
+            >
+              <b-icon icon="arrow-down" aria-hidden="true"></b-icon>
+            </b-button>
+            <!-- -->
+
+            <b-button
+              v-else
+              variant="outline-success"
+              size="sm"
+              class="m-1"
+              v-b-tooltip.hover
+              title="Dar de alta"
+              @click="update(row.item.idroomm)"
+            >
+              <b-icon icon="arrow-up" aria-hidden="true"></b-icon>
+            </b-button>
+          </template>
+
           <template #cell(state)="data">
             <b-icon
               v-if="data.value"
@@ -119,7 +146,7 @@ export default {
       },
       table: {
         isBusy: true,
-        fields: ['dni', 'firtsname', 'lastname', 'number', 'email', 'state', 'roles'],
+        fields: ['dni', 'firtsname', 'lastname', 'email', 'state', 'roles', 'Seleccionar'],
       },
       users: [],
     };
@@ -157,6 +184,12 @@ export default {
       this.alert.viewalert = true;
       this.getUsers();
       this.clear();
+    },
+    async update(id) {
+      this.alert.message = await this.$store.dispatch('ChangeStateUser', {
+        id: id,
+      });
+      this.getUsers();
     },
   },
 };

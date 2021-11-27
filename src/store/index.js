@@ -218,6 +218,14 @@ export default new Vuex.Store({
         return error.response.data;
       }
     },
+    async ChangeStateUser({commit}, {id}) {
+      try {
+        const res = await axios.put('/user/changeState/' + id);
+        return res.data.message;
+      } catch (error) {
+        return error.response.data;
+      }
+    },
     async findAllReservation({commit}) {
       try {
         const res = await axios.get('/reservation/');
