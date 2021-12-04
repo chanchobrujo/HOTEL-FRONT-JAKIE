@@ -2,6 +2,7 @@
 <template>
   <b-container>
     <b-row class="justify-content-md-center mt-4">
+      <PanelLogo />
       <b-col col md="6">
         <img
           src="../../assets/logo2.jpeg"
@@ -60,7 +61,11 @@
 </template>
 
 <script>
+import PanelLogo from '../../components/PanelLogo.vue';
 export default {
+  components: { 
+    PanelLogo,
+  },
   data() {
     return {
       username: '',
